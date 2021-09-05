@@ -13,18 +13,21 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
     height: 100vh;
     width: 100%;
+    background-color: #ecf3fc;
     
   }
   #__next {
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
   }
 `;
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#0074C6"
+      main: "#2973ec"
     }
   }
 });
@@ -40,6 +43,7 @@ class KanBanBoard extends App {
 
     return (
       <ThemeProvider theme={theme}>
+        {" "}
         <Head>
           <link
             href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap&subset=cyrillic"

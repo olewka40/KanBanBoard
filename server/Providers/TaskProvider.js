@@ -2,7 +2,7 @@ const Datastore = require("nedb");
 
 const PATH_TO_DB = __dirname + "/../../db";
 
-class TasksProvider {
+class TaskProvider {
   constructor() {
     this.taskDB = new Datastore({
       filename: `${PATH_TO_DB}/task.db`
@@ -35,9 +35,9 @@ class TasksProvider {
     });
   }
 
-  insert(dialog) {
-    this.taskDB.insert(dialog);
+  insert(task) {
+    this.taskDB.insert(task);
   }
 }
 
-module.exports = TasksProvider;
+module.exports = TaskProvider;

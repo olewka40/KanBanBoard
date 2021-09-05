@@ -13,6 +13,9 @@ const cors = require("cors");
 const morgan = require("morgan");
 const _ = require("lodash");
 const express = require("express/lib/express");
+const q_user = require("./queries/User");
+// const q_task = require("./queries/Task");
+// const q_board = require("./queries/Board");
 
 initializeDB();
 
@@ -91,32 +94,9 @@ nextApp.prepare().then(() => {
   //   next();
   // });
 
-  app.get("/api/user", async (req, res) => {
-    const userid = req.cookies.userId;
-    const user = await Database.user_provider.findOne({ _id: userid });
-    // TODO: УДАЛИТЬ ПАРОЛЬ ЮЗЕРА ПРИ ВЫДАЧЕ ЧЕРЕЗ АПИ
-    res.json(user);
-  });
-
-  //make uploads directory static
-
-  app.get("/api/getUserInfo", async (req, res) => {
-    const userid = req.cookies.userId;
-    const userInfo = await Database.user_provider.find({
-      _id: userid
-    });
-
-    res.json({
-      userInfo: userInfo
-    });
-  });
-
-  app.get("/api/getUsers", async (req, res) => {
-    const users = await Database.user_provider.find();
-    res.json({
-      users
-    });
-  });
+  app.get("/api/user", q_user.getUser);
+  app.get("/api/getUserInfo", q_user.getUserInfo);
+  app.get("/api/getUsers", q_user.getUsers);
 
   app.all("*", (req, res) => {
     return handle(req, res);

@@ -1,10 +1,12 @@
 const UserProvider = require("./Providers/UserProvider");
-const TasksProvider = require("./Providers/TasksProvider");
+const BoardProvider = require("./Providers/BoardProvider");
+const TaskProvider = require("./Providers/TaskProvider");
 
 class Database {
   constructor() {
     this.user_provider = new UserProvider();
-    this.task_provider = new TasksProvider();
+    this.board_provider = new BoardProvider();
+    this.task_provider = new TaskProvider();
   }
 }
 
