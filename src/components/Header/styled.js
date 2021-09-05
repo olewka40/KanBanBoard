@@ -32,5 +32,12 @@ const SLink = styled(Link)`
   cursor: pointer;
   text-decoration: none;
 `;
+const CreateBoardButton = styled.div`
+  margin-right: 5px;
+  margin-left: 5px;
+  color: aliceblue;
+  cursor: pointer;
+  text-decoration: none;
+`;
 
-export { HeaderComponent, HeaderTitle, SLink, Actions };
+export { HeaderComponent, HeaderTitle, SLink,CreateBoardButton, Actions };

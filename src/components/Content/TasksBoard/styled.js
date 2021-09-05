@@ -11,7 +11,7 @@ const Title = styled.div`
   justify-content: center;
   align-items: center;
   padding: 10px 10px;
-
+  width: 125px;
   background-color: ${props => props.background};
   color: ${props => props.color};
   font-weight: bold;

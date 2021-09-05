@@ -11,7 +11,6 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:3002/";
 
-
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
@@ -50,6 +49,10 @@ const App = () => {
           <Switch>
             <Route exact path="/">
               <Header />
+              <Main>Добро пожаловать!</Main>
+            </Route>
+            <Route path="/Board/:id">
+              <Header />
               <Main>
                 <Content />
               </Main>
@@ -81,5 +84,5 @@ const Main = styled.div`
   display: flex;
   height: calc(100% - 60px);
   padding-left: 0;
-  padding-top: 40px;
+  padding-top: 20px;
 `;

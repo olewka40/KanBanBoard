@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 const TaskContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  margin: 5px;
+  margin: 10px 5px 10px 0px;
   width: 250px;
   height: 60px;
   background-color: white;
@@ -14,5 +14,6 @@ const TaskContainer = styled.div`
   padding-left: 15px;
   word-break: break-word;
 `;
+const TaskName = styled.div``;
 
-export { TaskContainer };
+export { TaskContainer, TaskName };

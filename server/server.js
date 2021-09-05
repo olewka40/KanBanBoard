@@ -10,8 +10,9 @@ const cors = require("cors");
 const morgan = require("morgan");
 const _ = require("lodash");
 const express = require("express/lib/express");
+
 const q_user = require("./queries/User");
-// const q_task = require("./queries/Index");
+const q_task = require("./queries/Task");
 const q_board = require("./queries/Board");
 const q_login = require("./queries/LogInApi");
 
@@ -25,6 +26,10 @@ app.use(cors());
 app.use(morgan("dev"));
 
 app.post("/api/createNewBoard", q_board.createNewBoard);
+app.get("/api/getBoardById/:boardId", q_board.getBoardById);
+app.post("/api/createNewTask/:boardId/:taskName", q_task.createTask);
+app.put("/api/editTaskName", q_task.editTaskName);
+app.put("/api/editTaskStatus", q_task.editTaskStatus);
 
 app.get("/logout", q_login.userLogout);
 app.post("/api/registration", q_login.registrationUser);
@@ -45,6 +50,7 @@ server.listen(port, err => {
 async function initializeDB() {
   const createdUser = await Database.user_provider.findOne();
   const createdBoard = await Database.board_provider.findOne();
+  const createdTask = await Database.task_provider.findOne();
 
   if (!createdUser) {
     Database.user_provider.insert({
@@ -58,10 +64,32 @@ async function initializeDB() {
   }
   if (!createdBoard) {
     Database.board_provider.insert({
-      id: uuidv4(),
       name: "Новая доска для работы",
       owner: "uuid хозяина",
       public: true
+    });
+  }
+  if (!createdTask) {
+    Database.task_provider.insert({
+      name: "Маме купить свёклу",
+      boardId: "FAIbvM5lrAgsGDxT",
+      status: 0
+    });
+    Database.task_provider.insert({
+      name: "Папе купить морковь",
+      boardId: "FAIbvM5lrAgsGDxT",
+      status: 1
+    });
+    Database.task_provider.insert({
+      name: "Сыну купить машину",
+      boardId: "FAIbvM5lrAgsGDxT",
+      status: 2
+    });
+
+    Database.task_provider.insert({
+      name: "Дочке купить куклу",
+      boardId: "FAIbvM5lrAgsGDxT",
+      status: 3
     });
   }
 }

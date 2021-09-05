@@ -6,4 +6,10 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-export { Container };
+const BoardName = styled.div`
+  font-size: 18px;
+  font-weight: bolder;
+  margin: 20px 20px 20px 0;
+`;
+
+export { Container, BoardName };

@@ -5,7 +5,7 @@ const PATH_TO_DB = __dirname + "/../../db";
 class BoardProvider {
   constructor() {
     this.taskDB = new Datastore({
-      filename: `${PATH_TO_DB}/task.db`
+      filename: `${PATH_TO_DB}/board.db`
     });
 
     this.taskDB.loadDatabase();
