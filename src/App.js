@@ -3,10 +3,7 @@ import { Header } from "./components/Header";
 import React from "react";
 import { Content } from "./components/Content";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles/";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Login } from "./components/Login";
-import { Registration } from "./components/Registration";
-import { Profile } from "./components/Profile";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:3002/";
@@ -57,17 +54,8 @@ const App = () => {
                 <Content />
               </Main>
             </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/registration">
-              <Registration />
-            </Route>
-            <Route path="/profile">
-              <Profile />
-            </Route>
           </Switch>
-        </AppContainer>{" "}
+        </AppContainer>
       </ThemeProvider>
     </Router>
   );

@@ -13,7 +13,7 @@ export const AddTask = ({ id, getBoard }) => {
   };
   return (
     <AddTaskComponent>
-      <Title>Новая задача</Title>
+      <Title>Добавить новую задачу</Title>
       <SCardContent>
         <TextField
           variant="outlined"

@@ -1,7 +1,7 @@
 const Database = require("../../Database");
 
 const createTask = async (req, res) => {
-  const { taskName, boardId } = req.params;
+  const { taskName, boardId } = req.body;
   Database.task_provider.insert({
     name: taskName,
     boardId: boardId,
@@ -40,8 +40,23 @@ const editTaskName = async (req, res) => {
   res.json({ status: 201, message: `Имя задачи успешно изменено` });
 };
 
+const deleteTask = async (req, res) => {
+  const { taskId } = req.body;
+  await Database.task_provider.remove(
+    {
+      _id: taskId
+    },
+    function(err, data) {
+      console.log("delete---->" + data);
+    }
+  );
+
+  res.json({ status: 201, message: `deleteTask` });
+};
+
 module.exports = {
   createTask,
+  deleteTask,
   editTaskName,
   editTaskStatus
 };

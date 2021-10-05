@@ -16,7 +16,12 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DoneIcon from "@material-ui/icons/Done";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
-import { editTaskName, editTaskStatus } from "../../../../axiosRequests/task";
+import {
+  deleteTask,
+  editTaskName,
+  editTaskStatus
+} from "../../../../axiosRequests/task";
+import axios from "axios";
 
 export const Task = ({ background, task, getBoard }) => {
   const [open, setOpen] = useState(false);
@@ -29,6 +34,7 @@ export const Task = ({ background, task, getBoard }) => {
   const editTask = () => {
     setEditMode(true);
   };
+
   return (
     <TaskContainer background={background}>
       {!editMode ? (
@@ -80,6 +86,20 @@ export const Task = ({ background, task, getBoard }) => {
                       <EditIcon />
                     </ListItemIcon>
                     Редактировать
+                  </ListItem>
+                  <ListItem
+                    alignItems="center"
+                    button
+                    onClick={() => {
+                      deleteTask(task._id).then(() => {
+                        getBoard();
+                      });
+                    }}
+                  >
+                    <ListItemIcon>
+                      <DeleteIcon />
+                    </ListItemIcon>
+                    Удалить
                   </ListItem>
                   <ListItem button onClick={handleClick}>
                     <ListItemText>Изменить статус</ListItemText>

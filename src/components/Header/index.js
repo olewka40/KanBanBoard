@@ -18,8 +18,8 @@ export const Header = () => {
       <Actions>
         <CreateBoardButton onClick={newBoard}>Новая доска</CreateBoardButton>
         <div style={{ display: "flex" }}>
-          <SLink to="/login">Войти</SLink>
-          <SLink to="/registration">Зарегистрироваться</SLink>
+          <SLink to="/1">1</SLink>
+          <SLink to="/2">2</SLink>
         </div>
       </Actions>
     </HeaderComponent>
