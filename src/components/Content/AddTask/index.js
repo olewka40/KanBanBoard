@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, CardContent, TextField } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { AddTaskComponent, SCardContent, Title } from "./styled";
 import { createNewTask } from "../../../axiosRequests/task";
 
 export const AddTask = ({ id, getBoard }) => {
-  const [taskName, setTaskName] = useState();
+  const [taskName, setTaskName] = useState("");
   const createTask = () => {
+    if (taskName === "") return;
     createNewTask(id, taskName).then(e => {
+      setTaskName("");
       getBoard();
     });
   };
