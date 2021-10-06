@@ -62,7 +62,7 @@ export const Task = ({ background, task, getBoard }) => {
               setEditMode(false);
             }}
           >
-            <Close />
+            <Close color="error"/>
           </IconButton>
           <IconButton
             onClick={() => {
@@ -73,7 +73,7 @@ export const Task = ({ background, task, getBoard }) => {
               });
             }}
           >
-            <DoneIcon />
+            <DoneIcon color="primary"/>
           </IconButton>
         </>
       )}
@@ -104,7 +104,7 @@ export const Task = ({ background, task, getBoard }) => {
               }}
             >
               <IconButton>
-                <EditIcon />
+                <EditIcon color="primary"/>
               </IconButton>
               Редактировать
             </MenuItem>
@@ -117,7 +117,7 @@ export const Task = ({ background, task, getBoard }) => {
               }}
             >
               <IconButton>
-                <DeleteIcon />
+                <DeleteIcon color="error"/>
               </IconButton>
               Удалить
             </MenuItem>

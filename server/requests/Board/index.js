@@ -1,8 +1,9 @@
 const Database = require("../../Database");
 
 const createNewBoard = async (req, res) => {
+  const { boardName } = req.body;
   const qwe = await Database.board_provider.insert({
-    name: "Новая доска",
+    name: boardName ? boardName : "Новая доска",
     public: true
   });
   console.log(qwe, "qwe");

@@ -5,7 +5,6 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DoneIcon from "@material-ui/icons/Done";
 import { deleteBoard, editBoardName } from "../../axiosRequests/board";
-import { get } from "browser-cookies";
 import { Close } from "@material-ui/icons";
 export const Board = ({ board, getBoards }) => {
   const [edit, setEdit] = useState(false);
@@ -22,7 +21,7 @@ export const Board = ({ board, getBoards }) => {
                 setEdit(true);
               }}
             >
-              <EditIcon />
+              <EditIcon color="primary"/>
             </IconButton>
             <IconButton
               onClick={() => {
@@ -31,7 +30,7 @@ export const Board = ({ board, getBoards }) => {
                 });
               }}
             >
-              <DeleteIcon />
+              <DeleteIcon color="error" />
             </IconButton>
           </Actions>
         </>
@@ -49,7 +48,7 @@ export const Board = ({ board, getBoards }) => {
               setEdit(false);
             }}
           >
-            <Close />
+            <Close color="error"/>
           </IconButton>
           <IconButton
             onClick={() => {
@@ -60,7 +59,7 @@ export const Board = ({ board, getBoards }) => {
               });
             }}
           >
-            <DoneIcon />
+            <DoneIcon color="primary" />
           </IconButton>
         </>
       )}
