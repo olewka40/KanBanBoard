@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { AddTask } from "./AddTask";
 import { TasksBoard } from "./TasksBoard";
-import { Container, BoardName } from "./styled";
-import { useParams, useHistory } from "react-router-dom";
+import { Container } from "./styled";
+import { useParams } from "react-router-dom";
 import axios from "axios";
+import { BoardTitleComponent } from "./BoardTitle";
 
-export const Content = () => {
+export const Content = memo(() => {
   const [board, setBoard] = useState([]);
+
   const { id } = useParams();
-  const history = useHistory();
 
   const getBoard = async () => {
     const { data } = await axios.get(`/api/getBoardById/${id}`);
-    if (data === null) {
-      history.replace("/");
-    }
     setBoard(data);
   };
   useEffect(() => {
@@ -23,10 +21,10 @@ export const Content = () => {
   return (
     <>
       <Container>
-        <BoardName>{board.name}</BoardName>
+        <BoardTitleComponent board={board} getBoard={getBoard} />
         <AddTask id={board._id} getBoard={getBoard} />
         <TasksBoard tasksColumns={board.tasks} getBoard={getBoard} />
       </Container>
     </>
   );
-};
+});

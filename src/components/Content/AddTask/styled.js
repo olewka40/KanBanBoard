@@ -5,6 +5,7 @@ const AddTaskComponent = styled(Card)`
   width: 400px;
   height: 150px;
   border-radius: 20px;
+  margin-top: 20px;
 `;
 
 const Title = styled.p`

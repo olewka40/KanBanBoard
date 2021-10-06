@@ -6,6 +6,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import DoneIcon from "@material-ui/icons/Done";
 import { deleteBoard, editBoardName } from "../../axiosRequests/board";
 import { get } from "browser-cookies";
+import { Close } from "@material-ui/icons";
 export const Board = ({ board, getBoards }) => {
   const [edit, setEdit] = useState(false);
   const [newBoardName, setNewBoardName] = useState("");
@@ -37,6 +38,7 @@ export const Board = ({ board, getBoards }) => {
       ) : (
         <>
           <TextField
+            variant="outlined"
             placeholder="Введите новое имя"
             onChange={e => {
               setNewBoardName(e.target.value);
@@ -44,9 +46,16 @@ export const Board = ({ board, getBoards }) => {
           />
           <IconButton
             onClick={() => {
+              setEdit(false);
+            }}
+          >
+            <Close />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              if (newBoardName === "") return;
               editBoardName(board._id, newBoardName).then(() => {
                 setEdit(false);
-
                 getBoards();
               });
             }}

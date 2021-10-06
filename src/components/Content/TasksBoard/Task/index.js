@@ -8,6 +8,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Menu,
+  MenuItem,
   Popover,
   TextField
 } from "@material-ui/core";
@@ -15,21 +17,28 @@ import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DoneIcon from "@material-ui/icons/Done";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import { Close, ExpandLess, ExpandMore } from "@material-ui/icons";
 import {
   deleteTask,
   editTaskName,
   editTaskStatus
 } from "../../../../axiosRequests/task";
-import axios from "axios";
 
 export const Task = ({ background, task, getBoard }) => {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [newName, setNewName] = useState();
-
+  const [newName, setNewName] = useState("");
+  console.log(editMode);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = () => {
     setOpen(!open);
+  };
+  const handleMenu = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
   const editTask = () => {
     setEditMode(true);
@@ -42,127 +51,138 @@ export const Task = ({ background, task, getBoard }) => {
       ) : (
         <>
           <TextField
+            variant="outlined"
             placeholder="Введите новое имя"
             onChange={e => {
               setNewName(e.target.value);
             }}
-          />{" "}
+          />
           <IconButton
             onClick={() => {
+              setEditMode(false);
+            }}
+          >
+            <Close />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              if (newName === "") return;
               editTaskName(task._id, newName).then(() => {
                 setEditMode(false);
                 getBoard();
               });
             }}
           >
-            {" "}
             <DoneIcon />
           </IconButton>
         </>
       )}
-
       {!editMode && (
-        <PopupState variant="popper">
-          {popupState => (
-            <div>
-              <IconButton {...bindTrigger(popupState)}>
-                <MoreVertIcon />
+        <div>
+          <IconButton onClick={handleMenu} color="inherit">
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right"
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right"
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem
+              onClick={() => {
+                editTask();
+                handleClose();
+              }}
+            >
+              <IconButton>
+                <EditIcon />
               </IconButton>
-
-              <Popover
-                {...bindPopover(popupState)}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right"
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "center"
-                }}
-              >
-                <List disablePadding>
-                  <ListItem alignItems="center" button onClick={editTask}>
-                    <ListItemIcon>
-                      <EditIcon />
-                    </ListItemIcon>
-                    Редактировать
-                  </ListItem>
-
+              Редактировать
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                deleteTask(task._id).then(() => {
+                  getBoard();
+                  handleClose();
+                });
+              }}
+            >
+              <IconButton>
+                <DeleteIcon />
+              </IconButton>
+              Удалить
+            </MenuItem>
+            <ListItem button onClick={handleClick}>
+              <ListItemText>Изменить статус</ListItemText>
+              {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                {task.status !== 0 && (
                   <ListItem
-                    alignItems="center"
                     button
                     onClick={() => {
-                      deleteTask(task._id).then(() => {
+                      editTaskStatus(task._id, 0).then(e => {
                         getBoard();
+                        handleClose();
                       });
                     }}
                   >
-                    <ListItemIcon>
-                      <DeleteIcon />
-                    </ListItemIcon>
-                    Удалить
+                    В надо сделать
                   </ListItem>
-                  <ListItem button onClick={handleClick}>
-                    <ListItemText>Изменить статус</ListItemText>
-                    {open ? <ExpandLess /> : <ExpandMore />}
+                )}
+                {task.status !== 1 && (
+                  <ListItem
+                    button
+                    onClick={() => {
+                      editTaskStatus(task._id, 1).then(e => {
+                        getBoard();
+                        handleClose();
+                      });
+                    }}
+                  >
+                    Взять в работу
                   </ListItem>
-                  <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      {task.status !== 0 && (
-                        <ListItem
-                          button
-                          onClick={() => {
-                            editTaskStatus(task._id, 0).then(e => {
-                              getBoard();
-                            });
-                          }}
-                        >
-                          В надо сделать
-                        </ListItem>
-                      )}
-                      {task.status !== 1 && (
-                        <ListItem
-                          button
-                          onClick={() => {
-                            editTaskStatus(task._id, 1).then(e => {
-                              getBoard();
-                            });
-                          }}
-                        >
-                          Взять в работу
-                        </ListItem>
-                      )}
-                      {task.status !== 2 && (
-                        <ListItem
-                          button
-                          onClick={() => {
-                            editTaskStatus(task._id, 2).then(e => {
-                              getBoard();
-                            });
-                          }}
-                        >
-                          Перевести в готово
-                        </ListItem>
-                      )}
-                      {task.status !== 3 && (
-                        <ListItem
-                          button
-                          onClick={() => {
-                            editTaskStatus(task._id, 3).then(e => {
-                              getBoard();
-                            });
-                          }}
-                        >
-                          В корзину
-                        </ListItem>
-                      )}
-                    </List>
-                  </Collapse>
-                </List>
-              </Popover>
-            </div>
-          )}
-        </PopupState>
+                )}
+                {task.status !== 2 && (
+                  <ListItem
+                    button
+                    onClick={() => {
+                      editTaskStatus(task._id, 2).then(e => {
+                        getBoard();
+                        handleClose();
+                      });
+                    }}
+                  >
+                    Перевести в готово
+                  </ListItem>
+                )}
+                {task.status !== 3 && (
+                  <ListItem
+                    button
+                    onClick={() => {
+                      editTaskStatus(task._id, 3).then(e => {
+                        getBoard();
+                        handleClose();
+                      });
+                    }}
+                  >
+                    В корзину
+                  </ListItem>
+                )}
+              </List>
+            </Collapse>
+          </Menu>
+        </div>
       )}
     </TaskContainer>
   );

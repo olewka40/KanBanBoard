@@ -9,10 +9,20 @@ const BoardsContainer = styled.div`
 `;
 
 const BoardTitle = styled(Link)`
+  display: flex;
+  align-items: center;
   font-size: 18px;
   font-weight: bolder;
   color: black;
-  margin: 20px;
+  text-decoration: none;
+`;
+const BoardTitleNoLink = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  padding: 0 20px;
+  font-weight: bolder;
+  color: black;
   text-decoration: none;
 `;
 const BoardCard = styled.div`
@@ -24,8 +34,9 @@ const BoardCard = styled.div`
   background-color: white;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   cursor: pointer;
+  padding: 10px 20px;
 `;
 const Actions = styled.div`
   display: flex;
@@ -34,4 +45,4 @@ const Actions = styled.div`
   justify-content: center;
 `;
 
-export { Actions, BoardsContainer, BoardTitle, BoardCard };
+export { Actions, BoardsContainer, BoardTitle, BoardTitleNoLink, BoardCard };
