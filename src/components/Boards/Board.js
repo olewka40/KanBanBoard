@@ -6,6 +6,10 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import DoneIcon from "@material-ui/icons/Done";
 import { deleteBoard, editBoardName } from "../../axiosRequests/board";
 import { Close } from "@material-ui/icons";
+import moment from "moment";
+import "moment/locale/ru";
+
+moment.locale("ru");
 export const Board = ({ board, getBoards }) => {
   const [edit, setEdit] = useState(false);
   const [newBoardName, setNewBoardName] = useState("");
@@ -14,14 +18,17 @@ export const Board = ({ board, getBoards }) => {
     <BoardCard>
       {!edit ? (
         <>
-          <BoardTitle to={`/board/${board._id}`}>{board.name}</BoardTitle>
+          <BoardTitle to={`/board/${board._id}`}>
+            Название доски: {board.name} <br />
+            <br /> Дата создания: {moment(board.creationTime).fromNow()}
+          </BoardTitle>
           <Actions>
             <IconButton
               onClick={() => {
                 setEdit(true);
               }}
             >
-              <EditIcon color="primary"/>
+              <EditIcon color="primary" />
             </IconButton>
             <IconButton
               onClick={() => {
@@ -48,7 +55,7 @@ export const Board = ({ board, getBoards }) => {
               setEdit(false);
             }}
           >
-            <Close color="error"/>
+            <Close color="error" />
           </IconButton>
           <IconButton
             onClick={() => {

@@ -45,9 +45,9 @@ class TaskProvider {
       });
     });
   }
-  async remove(query) {
+  async remove(query, multi) {
     return new Promise((resolve, reject) => {
-      this.taskDB.remove(query, (err, data) => {
+      this.taskDB.remove(query, multi, (err, data) => {
         // если ошибка тупо выходим
         if (err) return reject();
 

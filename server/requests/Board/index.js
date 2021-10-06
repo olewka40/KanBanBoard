@@ -1,10 +1,11 @@
 const Database = require("../../Database");
+const moment = require("moment");
 
 const createNewBoard = async (req, res) => {
   const { boardName } = req.body;
   const qwe = await Database.board_provider.insert({
     name: boardName ? boardName : "Новая доска",
-    public: true
+    createTime: new Date()
   });
   console.log(qwe, "qwe");
 
@@ -17,7 +18,6 @@ const createNewBoard = async (req, res) => {
 
 const getBoards = async (req, res) => {
   const boards = await Database.board_provider.find();
-  console.log(boards);
   res.json(boards);
 };
 const getBoardById = async (req, res) => {
@@ -86,6 +86,13 @@ const deleteBoard = async (req, res) => {
     {
       _id: boardId
     },
+    function(err, data) {}
+  );
+  await Database.task_provider.remove(
+    {
+      boardId: boardId
+    },
+    { multi: true },
     function(err, data) {}
   );
 

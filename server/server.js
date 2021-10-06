@@ -4,11 +4,9 @@ const cookieParser = require("cookie-parser");
 const Database = require("./Database");
 const bodyParser = require("body-parser");
 const port = parseInt(process.env.PORT, 10) || 3002;
-
+const moment = require("moment");
 const cors = require("cors");
 const morgan = require("morgan");
-const _ = require("lodash");
-const express = require("express/lib/express");
 
 const q_task = require("./requests/Task");
 const q_board = require("./requests/Board");
@@ -47,8 +45,8 @@ async function initializeDB() {
   if (!createdBoard) {
     Database.board_provider.insert({
       name: "Новая доска для работы",
-      public: true,
-      _id: "x56rmdcomuzn90VS"
+      _id: "x56rmdcomuzn90VS",
+      createTime: moment()
     });
   }
   if (!createdTask) {
