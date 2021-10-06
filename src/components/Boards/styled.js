@@ -17,10 +17,13 @@ const BoardTitle = styled(Link)`
   text-decoration: none;
 `;
 const BoardTitleNoLink = styled.div`
+  width: 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   font-size: 18px;
   padding: 0 20px;
+  box-sizing: border-box;
   font-weight: bolder;
   color: black;
   text-decoration: none;

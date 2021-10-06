@@ -28,7 +28,6 @@ export const Task = ({ background, task, getBoard }) => {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState("");
-  console.log(editMode);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = () => {
     setOpen(!open);
@@ -62,7 +61,7 @@ export const Task = ({ background, task, getBoard }) => {
               setEditMode(false);
             }}
           >
-            <Close color="error"/>
+            <Close color="error" />
           </IconButton>
           <IconButton
             onClick={() => {
@@ -73,7 +72,7 @@ export const Task = ({ background, task, getBoard }) => {
               });
             }}
           >
-            <DoneIcon color="primary"/>
+            <DoneIcon color="primary" />
           </IconButton>
         </>
       )}
@@ -104,7 +103,7 @@ export const Task = ({ background, task, getBoard }) => {
               }}
             >
               <IconButton>
-                <EditIcon color="primary"/>
+                <EditIcon color="primary" />
               </IconButton>
               Редактировать
             </MenuItem>
@@ -117,7 +116,7 @@ export const Task = ({ background, task, getBoard }) => {
               }}
             >
               <IconButton>
-                <DeleteIcon color="error"/>
+                <DeleteIcon color="error" />
               </IconButton>
               Удалить
             </MenuItem>

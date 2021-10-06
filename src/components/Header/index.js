@@ -14,7 +14,6 @@ export const Header = () => {
 
   const newBoard = async () => {
     const { boardId } = await createNewBoard();
-    console.log(boardId);
     history.push(`/board/${boardId}`);
     // history.push(`board/${boardId}`);
   };

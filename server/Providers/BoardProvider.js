@@ -37,7 +37,6 @@ class BoardProvider {
   async insert(board) {
     return new Promise((resolve, reject) => {
       this.boardDB.insert(board, (err, data) => {
-        console.log(data, "data");
         // если ошибка тупо выходим
         if (err) return reject();
 

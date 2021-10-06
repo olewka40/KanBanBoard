@@ -7,7 +7,6 @@ const createNewBoard = async (req, res) => {
     name: boardName ? boardName : "Новая доска",
     createTime: new Date()
   });
-  console.log(qwe, "qwe");
 
   res.json({
     status: 200,
