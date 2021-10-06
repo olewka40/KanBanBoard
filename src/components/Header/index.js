@@ -3,23 +3,28 @@ import {
   Actions,
   HeaderComponent,
   HeaderTitle,
-  CreateBoardButton,
+  HeaderButton,
   SLink
 } from "./styled";
 import { v4 as uuid } from "uuid";
 import { createNewBoard } from "../../axiosRequests/board";
+import { useHistory } from "react-router-dom";
 export const Header = () => {
-  const newBoard = () => {
-    createNewBoard();
+  const history = useHistory();
+
+  const newBoard = async () => {
+    const { boardId } = await createNewBoard();
+    console.log(boardId);
+    history.push(`/board/${boardId}`);
+    // history.push(`board/${boardId}`);
   };
   return (
     <HeaderComponent>
       <HeaderTitle>Канбан-доска</HeaderTitle>
       <Actions>
-        <CreateBoardButton onClick={newBoard}>Новая доска</CreateBoardButton>
+        <HeaderButton onClick={newBoard}>Новая доска</HeaderButton>
         <div style={{ display: "flex" }}>
-          <SLink to="/1">1</SLink>
-          <SLink to="/2">2</SLink>
+          <SLink to="/boards">Все доски</SLink>
         </div>
       </Actions>
     </HeaderComponent>

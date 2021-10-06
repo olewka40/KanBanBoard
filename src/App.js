@@ -2,9 +2,10 @@ import styled, { createGlobalStyle } from "styled-components";
 import { Header } from "./components/Header";
 import React from "react";
 import { Content } from "./components/Content";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles/";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles/";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import axios from "axios";
+import {Boards} from "./components/Boards";
 
 axios.defaults.baseURL = "http://localhost:3002/";
 
@@ -25,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: "#2973ec"
@@ -43,16 +44,19 @@ const App = () => {
             rel="stylesheet"
           />
           <GlobalStyle />
+          <Header />
+
           <Switch>
             <Route exact path="/">
-              <Header />
               <Main>Добро пожаловать!</Main>
             </Route>
-            <Route path="/Board/:id">
-              <Header />
+            <Route path="/board/:id">
               <Main>
                 <Content />
               </Main>
+            </Route>
+            <Route path="/boards">
+              <Boards />
             </Route>
           </Switch>
         </AppContainer>

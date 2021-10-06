@@ -21,10 +21,12 @@ export const Content = () => {
     getBoard();
   }, [id]);
   return (
-    <Container>
-      <BoardName>{board.name}</BoardName>
-      <AddTask id={board._id} getBoard={getBoard}/>
-      <TasksBoard tasksColumns={board.tasks} getBoard={getBoard}/>
-    </Container>
+    <>
+      <Container>
+        <BoardName>{board.name}</BoardName>
+        <AddTask id={board._id} getBoard={getBoard} />
+        <TasksBoard tasksColumns={board.tasks} getBoard={getBoard} />
+      </Container>
+    </>
   );
 };

@@ -1,18 +1,24 @@
 const Database = require("../../Database");
 
 const createNewBoard = async (req, res) => {
-  Database.board_provider.insert({
+  const qwe = await Database.board_provider.insert({
     name: "Новая доска",
-    owner: "uuid хозяина",
     public: true
   });
+  console.log(qwe, "qwe");
 
   res.json({
     status: 200,
-    message: `Доска  успешно создана`
+    message: `Доска  успешно создана`,
+    boardId: qwe._id
   });
 };
 
+const getBoards = async (req, res) => {
+  const boards = await Database.board_provider.find();
+  console.log(boards);
+  res.json(boards);
+};
 const getBoardById = async (req, res) => {
   const { boardId } = req.params;
   const board = await Database.board_provider.findOne({ _id: boardId });
@@ -61,7 +67,34 @@ const getBoardById = async (req, res) => {
   res.json(board);
 };
 
+const editBoardName = async (req, res) => {
+  const { boardId, boardName } = req.body;
+
+  Database.board_provider.update(
+    { _id: boardId },
+    { $set: { name: boardName } },
+    {},
+    function(err, docs) {}
+  );
+
+  res.json({ status: 201, message: `Имя задачи успешно изменено` });
+};
+const deleteBoard = async (req, res) => {
+  const { boardId } = req.body;
+  await Database.board_provider.remove(
+    {
+      _id: boardId
+    },
+    function(err, data) {}
+  );
+
+  res.json({ status: 200, message: `deleteBoard` });
+};
+
 module.exports = {
   createNewBoard,
-  getBoardById
+  getBoards,
+  getBoardById,
+  editBoardName,
+  deleteBoard
 };

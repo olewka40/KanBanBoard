@@ -7,7 +7,7 @@ export const TasksBoard = ({ tasksColumns, getBoard }) => {
     <Board>
       {tasksColumns &&
         tasksColumns.map(column => (
-          <TaskSection>
+          <TaskSection key={column.name}>
             <Title background={column.background} color={column.color}>
               {column.name}
             </Title>

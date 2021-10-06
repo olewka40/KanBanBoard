@@ -23,8 +23,11 @@ app.use(cors());
 app.use(morgan("dev"));
 
 // boards
+app.get("/api/getBoards", q_board.getBoards);
 app.post("/api/createNewBoard", q_board.createNewBoard);
 app.get("/api/getBoardById/:boardId", q_board.getBoardById);
+app.post("/api/deleteBoard", q_board.deleteBoard);
+app.put("/api/editBoardName", q_board.editBoardName);
 
 // tasks
 app.post("/api/createNewTask", q_task.createTask);
@@ -44,7 +47,6 @@ async function initializeDB() {
   if (!createdBoard) {
     Database.board_provider.insert({
       name: "Новая доска для работы",
-      owner: "uuid хозяина",
       public: true
     });
   }

@@ -87,6 +87,7 @@ export const Task = ({ background, task, getBoard }) => {
                     </ListItemIcon>
                     Редактировать
                   </ListItem>
+
                   <ListItem
                     alignItems="center"
                     button
@@ -152,9 +153,6 @@ export const Task = ({ background, task, getBoard }) => {
                             });
                           }}
                         >
-                          <ListItemIcon>
-                            <DeleteIcon />
-                          </ListItemIcon>
                           В корзину
                         </ListItem>
                       )}

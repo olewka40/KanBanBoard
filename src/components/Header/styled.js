@@ -32,7 +32,7 @@ const SLink = styled(Link)`
   cursor: pointer;
   text-decoration: none;
 `;
-const CreateBoardButton = styled.div`
+const HeaderButton = styled.div`
   margin-right: 5px;
   margin-left: 5px;
   color: aliceblue;
@@ -40,4 +40,4 @@ const CreateBoardButton = styled.div`
   text-decoration: none;
 `;
 
-export { HeaderComponent, HeaderTitle, SLink,CreateBoardButton, Actions };
+export { HeaderComponent, HeaderTitle, SLink,HeaderButton, Actions };

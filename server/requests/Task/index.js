@@ -18,9 +18,7 @@ const editTaskStatus = async (req, res) => {
     { _id: taskId },
     { $set: { status: taskStatus } },
     {},
-    function(err, numReplaced) {
-      console.log("replaced---->" + numReplaced);
-    }
+    function(err, docs) {}
   );
 
   res.json({ status: 201, message: `Задача  успешно изменена` });
@@ -32,9 +30,7 @@ const editTaskName = async (req, res) => {
     { _id: taskId },
     { $set: { name: taskName } },
     {},
-    function(err, numReplaced) {
-      console.log("replaced---->" + numReplaced);
-    }
+    function(err, docs) {}
   );
 
   res.json({ status: 201, message: `Имя задачи успешно изменено` });
