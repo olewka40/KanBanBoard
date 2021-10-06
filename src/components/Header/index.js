@@ -20,7 +20,9 @@ export const Header = () => {
   };
   return (
     <HeaderComponent>
-      <HeaderTitle>Канбан-доска</HeaderTitle>
+      <HeaderTitle>
+        <SLink to="/">Канбан-доска</SLink>
+      </HeaderTitle>
       <Actions>
         <HeaderButton onClick={newBoard}>Новая доска</HeaderButton>
         <div style={{ display: "flex" }}>
