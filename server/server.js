@@ -47,29 +47,30 @@ async function initializeDB() {
   if (!createdBoard) {
     Database.board_provider.insert({
       name: "Новая доска для работы",
-      public: true
+      public: true,
+      _id: "x56rmdcomuzn90VS"
     });
   }
   if (!createdTask) {
     Database.task_provider.insert({
       name: "Маме купить свёклу",
-      boardId: "FAIbvM5lrAgsGDxT",
+      boardId: "x56rmdcomuzn90VS",
       status: 0
     });
     Database.task_provider.insert({
       name: "Папе купить морковь",
-      boardId: "FAIbvM5lrAgsGDxT",
+      boardId: "x56rmdcomuzn90VS",
       status: 1
     });
     Database.task_provider.insert({
       name: "Сыну купить машину",
-      boardId: "FAIbvM5lrAgsGDxT",
+      boardId: "x56rmdcomuzn90VS",
       status: 2
     });
 
     Database.task_provider.insert({
       name: "Дочке купить куклу",
-      boardId: "FAIbvM5lrAgsGDxT",
+      boardId: "x56rmdcomuzn90VS",
       status: 3
     });
   }

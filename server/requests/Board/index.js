@@ -60,7 +60,7 @@ const getBoardById = async (req, res) => {
     },
     {
       tasks: tasks3,
-      name: "Корзина",
+      name: "Отказано",
       background: "#fbdedf",
       color: "#b56b73"
     }

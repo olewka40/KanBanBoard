@@ -29,7 +29,7 @@ const BoardCard = styled.div`
   min-width: 250px;
   font-size: 18px;
   font-weight: bolder;
-  margin: 20px;
+  margin: 20px 20px 20px 0px;
   border-radius: 8px;
   background-color: white;
   display: flex;
