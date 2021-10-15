@@ -41,10 +41,13 @@ const theme = createTheme({
 });
 
 const App = () => {
+
   const history = useHistory();
+
   const toBoards = () => {
     history.push(`/boards`);
   };
+
   return (
       <ThemeProvider theme={theme}>
         <AppContainer>

@@ -12,6 +12,7 @@ export const BoardTitleComponent = ({ board, getBoard }) => {
   const [newBoardName, setNewBoardName] = useState("");
 
   const history = useHistory();
+
   return (
     <BoardTitleNoLink>
       {!editBoardMode ? (
