@@ -87,7 +87,7 @@ const deleteBoard = async (req, res) => {
     },
     function(err, data) {}
   );
-  await Database.task_provider.remove(
+  await Database.task_provider.removeAll(
     {
       boardId: boardId
     },

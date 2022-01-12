@@ -13,6 +13,7 @@ export const TasksBoard = ({ tasksColumns, getBoard }) => {
             </Title>
             {column.tasks.map(t => (
               <Task
+                key={t._id}
                 background={column.background}
                 task={t}
                 getBoard={getBoard}
