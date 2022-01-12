@@ -8,8 +8,6 @@ export const Boards = () => {
 
   const getBoards = async () => {
     const { data } = await axios.get("/api/getBoards");
-
-    console.log(data, "123");
     setBoards(data);
   };
   useEffect(() => {

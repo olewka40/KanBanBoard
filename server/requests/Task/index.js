@@ -43,7 +43,6 @@ const deleteTask = async (req, res) => {
       _id: taskId
     },
     function(err, data) {
-      console.log("delete---->" + data);
     }
   );
 

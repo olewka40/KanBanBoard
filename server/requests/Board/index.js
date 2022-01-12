@@ -5,7 +5,6 @@ const createNewBoard = async (req, res) => {
     name: "Новая доска",
     public: true
   });
-  console.log(qwe, "qwe");
 
   res.json({
     status: 200,
@@ -16,7 +15,6 @@ const createNewBoard = async (req, res) => {
 
 const getBoards = async (req, res) => {
   const boards = await Database.board_provider.find();
-  console.log(boards);
   res.json(boards);
 };
 const getBoardById = async (req, res) => {

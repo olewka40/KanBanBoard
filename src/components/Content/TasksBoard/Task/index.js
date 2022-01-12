@@ -28,7 +28,6 @@ export const Task = ({ background, task, getBoard }) => {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState("");
-  console.log(editMode);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = () => {
     setOpen(!open);
