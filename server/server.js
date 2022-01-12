@@ -47,7 +47,7 @@ async function initializeDB() {
       name: "Новая доска для работы",
       _id: "x56rmdcomuzn90VS",
       createTime: moment(),
-      tasksCount: 3
+      tasksCount: 4
     });
   }
   if (!createdTask) {
