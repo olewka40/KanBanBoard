@@ -24,7 +24,7 @@ import {
   editTaskStatus
 } from "../../../../axiosRequests/task";
 
-export const Task = ({ background, task, getBoard }) => {
+export const Task = ({ background, task, getBoard, boardId }) => {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState("");
@@ -109,7 +109,7 @@ export const Task = ({ background, task, getBoard }) => {
             </MenuItem>
             <MenuItem
               onClick={() => {
-                deleteTask(task._id).then(() => {
+                deleteTask(task._id, boardId).then(() => {
                   getBoard();
                   handleClose();
                 });

@@ -1,11 +1,11 @@
 const Database = require("../../Database");
-const moment = require("moment");
 
 const createNewBoard = async (req, res) => {
   const { boardName } = req.body;
   const qwe = await Database.board_provider.insert({
     name: boardName ? boardName : "Новая доска",
-    createTime: new Date()
+    createTime: new Date(),
+    tasksCount: 0
   });
 
   res.json({

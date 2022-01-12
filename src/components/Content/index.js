@@ -23,7 +23,7 @@ export const Content = memo(() => {
       <Container>
         <BoardTitleComponent board={board} getBoard={getBoard} />
         <AddTask id={board._id} getBoard={getBoard} />
-        <TasksBoard tasksColumns={board.tasks} getBoard={getBoard} />
+        <TasksBoard tasksColumns={board.tasks} getBoard={getBoard}  boardId={board._id}/>
       </Container>
     </>
   );
