@@ -5,8 +5,8 @@ const createNewTask = async (boardId, taskName) =>
 const editTaskName = async (taskId, taskName) =>
   await axios.put(`/api/editTaskName/`, { taskId, taskName });
 
-const deleteTask = async taskId =>
-  await axios.post(`/api/deleteTask`, { taskId });
+const deleteTask = async (taskId, boardId) =>
+  await axios.post(`/api/deleteTask`, { taskId, boardId });
 
 const editTaskStatus = async (taskId, taskStatus) =>
   await axios.put(`/api/editTaskStatus`, { taskId, taskStatus });

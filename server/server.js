@@ -46,7 +46,8 @@ async function initializeDB() {
     Database.board_provider.insert({
       name: "Новая доска для работы",
       _id: "x56rmdcomuzn90VS",
-      createTime: moment()
+      createTime: moment(),
+      tasksCount: 3
     });
   }
   if (!createdTask) {
