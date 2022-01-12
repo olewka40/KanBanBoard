@@ -4,7 +4,6 @@ import { TasksBoard } from "./TasksBoard";
 import { Container } from "./styled";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { BoardTitleComponent } from "./BoardTitle";
 
 export const Content = memo(() => {
   const [board, setBoard] = useState([]);
@@ -21,7 +20,7 @@ export const Content = memo(() => {
   return (
     <>
       <Container>
-        <BoardTitleComponent board={board} getBoard={getBoard} />
+        {/*<BoardTitleComponent board={board} getBoard={getBoard} />*/}
         <AddTask id={board._id} getBoard={getBoard} />
         <TasksBoard tasksColumns={board.tasks} getBoard={getBoard} />
       </Container>
