@@ -34,9 +34,9 @@ export const Board = ({ board, getBoards }) => {
             </IconButton>
             <IconButton
               onClick={() => {
-                deleteBoard(board._id).then(({data}) => {
+                deleteBoard(board._id).then(({ data }) => {
                   getBoards();
-                  alert(data.message)
+                  alert(data.message);
                 });
               }}
             >
@@ -63,7 +63,7 @@ export const Board = ({ board, getBoards }) => {
           <IconButton
             onClick={() => {
               if (newBoardName === "") return;
-              editBoardName(board._id, newBoardName).then(({data}) => {
+              editBoardName(board._id, newBoardName).then(({ data }) => {
                 setEdit(false);
                 getBoards();
                 console.log(data);
