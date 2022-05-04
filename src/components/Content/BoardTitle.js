@@ -47,9 +47,10 @@ export const BoardTitleComponent = ({ board, getBoard }) => {
           <IconButton
             onClick={() => {
               if (newBoardName === "") return;
-              editBoardName(board._id, newBoardName).then(() => {
+              editBoardName(board._id, newBoardName).then(({ data }) => {
                 setEditBoardMode(false);
                 getBoard();
+                alert(data.message);
               });
             }}
           >
@@ -59,7 +60,8 @@ export const BoardTitleComponent = ({ board, getBoard }) => {
       )}
       <Button
         onClick={() => {
-          deleteBoard(board._id).then(() => {
+          deleteBoard(board._id).then(({ data }) => {
+            alert(data.message);
             history.replace("/boards");
           });
         }}

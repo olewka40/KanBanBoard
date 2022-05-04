@@ -9,10 +9,15 @@ import {
 } from "../Content/AddTask/styled";
 
 export const AddBoard = ({ getBoards }) => {
-  const [boardName, setBoardName] = useState();
+  const [boardName, setBoardName] = useState("");
   const createBoard = () => {
-    createNewBoard(boardName).then(e => {
+    if(boardName === "" || boardName === " " || boardName === " ") {
+      alert("Введите название новой доски!")
+    }
+    createNewBoard(boardName).then(({status,message}) => {
       getBoards();
+      setBoardName("")
+      if(status) alert(message)
     });
   };
   return (
@@ -20,6 +25,7 @@ export const AddBoard = ({ getBoards }) => {
       <Title>Добавить новую Доску</Title>
       <SCardContent>
         <TextField
+            value={boardName}
           variant="outlined"
           placeholder="Название доски"
           onChange={e => {

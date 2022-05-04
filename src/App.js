@@ -19,7 +19,8 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    height: 100vh;
+    // TODO: тестирование высота=> мин высота
+    min-height: 100vh;
     width: 100%;
     background-color: #ecf3fc;
     
@@ -86,19 +87,19 @@ const App = () => {
 export default App;
 
 const AppContainer = styled.div`
-  width: 70%;
+  width: 80%;
   display: flex;
   flex-direction: column;
 `;
 const Main = styled.div`
   display: flex;
-  height: calc(100% - 60px);
+  height: calc(100vh - 60px);  
   padding-left: 0;
   padding-top: 20px;
 `;
 const Welcome = styled.div`
   display: flex;
-  height: calc(100% - 60px);
+  height: calc(100vh - 60px);  
   justify-content: center;
   align-items: center;
   flex-direction: column;

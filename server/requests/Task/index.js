@@ -29,7 +29,7 @@ const editTaskStatus = async (req, res) => {
     function(err, docs) {}
   );
 
-  res.json({ status: 201, message: `Задача  успешно изменена` });
+  res.json({ status: 201, message: `Статус задачи успешно изменён` });
 };
 const editTaskName = async (req, res) => {
   const { taskId, taskName } = req.body;

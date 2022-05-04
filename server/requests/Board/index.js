@@ -37,6 +37,11 @@ const getBoardById = async (req, res) => {
   const tasks3 = await Database.task_provider.find({
     boardId: boardId,
     status: 3
+
+  });
+  const tasks4 = await Database.task_provider.find({
+    boardId: boardId,
+    status: 4
   });
   board.tasks = [
     {
@@ -53,12 +58,18 @@ const getBoardById = async (req, res) => {
     },
     {
       tasks: tasks2,
+      name: "Тестирование",
+      background: "#4472c7",
+      color: "#d1e3fb"
+    },
+    {
+      tasks: tasks3,
       name: "Готово",
       background: "#d2f7db",
       color: "#69ab76"
     },
     {
-      tasks: tasks3,
+      tasks: tasks4,
       name: "Отказано",
       background: "#fbdedf",
       color: "#b56b73"
@@ -77,7 +88,7 @@ const editBoardName = async (req, res) => {
     function(err, docs) {}
   );
 
-  res.json({ status: 201, message: `Имя задачи успешно изменено` });
+  res.json({ status: 201, message: `Имя доски успешно изменено` });
 };
 const deleteBoard = async (req, res) => {
   const { boardId } = req.body;
@@ -95,7 +106,7 @@ const deleteBoard = async (req, res) => {
     function(err, data) {}
   );
 
-  res.json({ status: 200, message: `deleteBoard` });
+  res.json({ status: 200, message: `Доска успешно удалена!` });
 };
 
 module.exports = {

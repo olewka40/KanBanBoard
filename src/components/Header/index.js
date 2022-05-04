@@ -15,7 +15,6 @@ export const Header = () => {
   const newBoard = async () => {
     const { boardId } = await createNewBoard();
     history.push(`/board/${boardId}`);
-    // history.push(`board/${boardId}`);
   };
   return (
     <HeaderComponent>

@@ -6,14 +6,11 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
-  Popover,
   TextField
 } from "@material-ui/core";
-import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DoneIcon from "@material-ui/icons/Done";
@@ -66,9 +63,10 @@ export const Task = ({ background, task, getBoard, boardId }) => {
           <IconButton
             onClick={() => {
               if (newName === "") return;
-              editTaskName(task._id, newName).then(() => {
+              editTaskName(task._id, newName).then(({ data }) => {
                 setEditMode(false);
                 getBoard();
+                alert(data.message);
               });
             }}
           >
@@ -109,9 +107,10 @@ export const Task = ({ background, task, getBoard, boardId }) => {
             </MenuItem>
             <MenuItem
               onClick={() => {
-                deleteTask(task._id, boardId).then(() => {
+                deleteTask(task._id, boardId).then(({ data }) => {
                   getBoard();
                   handleClose();
+                  alert(data.message);
                 });
               }}
             >
@@ -130,9 +129,10 @@ export const Task = ({ background, task, getBoard, boardId }) => {
                   <ListItem
                     button
                     onClick={() => {
-                      editTaskStatus(task._id, 0).then(e => {
+                      editTaskStatus(task._id, 0).then(({ data }) => {
                         getBoard();
                         handleClose();
+                        alert(data.message);
                       });
                     }}
                   >
@@ -143,9 +143,10 @@ export const Task = ({ background, task, getBoard, boardId }) => {
                   <ListItem
                     button
                     onClick={() => {
-                      editTaskStatus(task._id, 1).then(e => {
+                      editTaskStatus(task._id, 1).then(({ data }) => {
                         getBoard();
                         handleClose();
+                        alert(data.message);
                       });
                     }}
                   >
@@ -156,26 +157,43 @@ export const Task = ({ background, task, getBoard, boardId }) => {
                   <ListItem
                     button
                     onClick={() => {
-                      editTaskStatus(task._id, 2).then(e => {
+                      editTaskStatus(task._id, 2).then(({ data }) => {
                         getBoard();
                         handleClose();
+                        alert(data.message);
                       });
                     }}
                   >
-                    Перевести в готово
+                    Передать на тестирование
                   </ListItem>
                 )}
                 {task.status !== 3 && (
                   <ListItem
                     button
                     onClick={() => {
-                      editTaskStatus(task._id, 3).then(e => {
+                      editTaskStatus(task._id, 3).then(({ data }) => {
                         getBoard();
                         handleClose();
+                        alert(data.message);
                       });
                     }}
                   >
-                    В корзину
+                    Перевести в готово
+                  </ListItem>
+                )}
+
+                {task.status !== 4 && (
+                  <ListItem
+                    button
+                    onClick={() => {
+                      editTaskStatus(task._id, 4).then(({ data }) => {
+                        getBoard();
+                        handleClose();
+                        alert(data.message);
+                      });
+                    }}
+                  >
+                    В отказано
                   </ListItem>
                 )}
               </List>
