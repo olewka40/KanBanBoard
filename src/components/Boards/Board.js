@@ -13,14 +13,19 @@ moment.locale("ru");
 export const Board = ({ board, getBoards }) => {
   const [edit, setEdit] = useState(false);
   const [newBoardName, setNewBoardName] = useState("");
-
+  console.log(board, board.createTime, "board.creationTime");
   return (
     <BoardCard>
       {!edit ? (
         <>
           <BoardTitle to={`/board/${board._id}`}>
             Название доски: {board.name} <br />
-            <br /> Дата создания: {moment(board.creationTime).fromNow()}
+            <br />
+            Дата создания:
+            {moment(board.createTime)
+              .lang("ru")
+              .startOf()
+              .fromNow()}
             <br />
             <br /> Количество задач: {board.tasksCount}
           </BoardTitle>
@@ -28,6 +33,7 @@ export const Board = ({ board, getBoards }) => {
             <IconButton
               onClick={() => {
                 setEdit(true);
+                setNewBoardName("");
               }}
             >
               <EditIcon color="primary" />

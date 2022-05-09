@@ -10,8 +10,7 @@ const morgan = require("morgan");
 
 const q_task = require("./requests/Task");
 const q_board = require("./requests/Board");
-
-initializeDB();
+const q_user = require("./requests/User");
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,8 +19,13 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan("dev"));
 
+//user
+app.post("/api/createNewUser/", q_user.createNewUser);
+app.get("/api/authorization/:login/:password", q_user.authorization);
+app.get("/api/getUserById/:userId", q_user.getUserById);
+
 // boards
-app.get("/api/getBoards", q_board.getBoards);
+app.get("/api/getBoards/:userId", q_board.getBoards);
 app.post("/api/createNewBoard", q_board.createNewBoard);
 app.get("/api/getBoardById/:boardId", q_board.getBoardById);
 app.post("/api/deleteBoard", q_board.deleteBoard);
@@ -37,40 +41,3 @@ server.listen(port, err => {
   if (err) throw err;
   console.log(`> Ready on http://localhost:${port}`);
 });
-
-async function initializeDB() {
-  const createdBoard = await Database.board_provider.findOne();
-  const createdTask = await Database.task_provider.findOne();
-
-  if (!createdBoard) {
-    Database.board_provider.insert({
-      name: "Новая доска для работы",
-      _id: "x56rmdcomuzn90VS",
-      createTime: moment(),
-      tasksCount: 4
-    });
-  }
-  if (!createdTask) {
-    Database.task_provider.insert({
-      name: "Маме купить свёклу",
-      boardId: "x56rmdcomuzn90VS",
-      status: 0
-    });
-    Database.task_provider.insert({
-      name: "Папе купить морковь",
-      boardId: "x56rmdcomuzn90VS",
-      status: 1
-    });
-    Database.task_provider.insert({
-      name: "Сыну купить машину",
-      boardId: "x56rmdcomuzn90VS",
-      status: 2
-    });
-
-    Database.task_provider.insert({
-      name: "Дочке купить куклу",
-      boardId: "x56rmdcomuzn90VS",
-      status: 3
-    });
-  }
-}

@@ -22,6 +22,7 @@ export const BoardTitleComponent = ({ board, getBoard }) => {
             <IconButton
               onClick={() => {
                 setEditBoardMode(true);
+                setNewBoardName("");
               }}
             >
               <EditIcon color="primary" />
@@ -40,6 +41,7 @@ export const BoardTitleComponent = ({ board, getBoard }) => {
           <IconButton
             onClick={() => {
               setEditBoardMode(false);
+              setNewBoardName("");
             }}
           >
             <Close color="error" />

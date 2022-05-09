@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import axios from "axios";
 import { Board } from "./Board";
 import { BoardsContainer } from "./styled";
 import { AddBoard } from "./addBoard";
 
-export const Boards = () => {
+export const Boards = memo(({ user }) => {
   const [boards, setBoards] = useState(null);
-
+  console.log(user);
   const getBoards = async () => {
-    const { data } = await axios.get("/api/getBoards");
+    const { data } = await axios.get(`api/getBoards/${user._id}`);
     setBoards(data);
   };
   useEffect(() => {
-    if (boards === null) {
+    if (user && boards === null) {
       getBoards();
     }
-  }, [boards]);
+  }, [boards, user]);
   return (
     <>
       <AddBoard getBoards={getBoards} />
@@ -27,4 +27,4 @@ export const Boards = () => {
       </BoardsContainer>
     </>
   );
-};
+});

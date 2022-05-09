@@ -1,7 +1,10 @@
 import axios from "axios";
 
-const createNewBoard = async (boardName) => {
-  const { data } = await axios.post("/api/createNewBoard", { boardName});
+const createNewBoard = async (boardName, userId) => {
+  const { data } = await axios.post("/api/createNewBoard", {
+    boardName,
+    userId
+  });
   return data;
 };
 const editBoardName = async (boardId, boardName) =>

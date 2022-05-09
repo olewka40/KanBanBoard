@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Actions,
   HeaderComponent,
@@ -6,15 +6,23 @@ import {
   HeaderButton,
   SLink
 } from "./styled";
-import { v4 as uuid } from "uuid";
 import { createNewBoard } from "../../axiosRequests/board";
 import { useHistory } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 export const Header = () => {
   const history = useHistory();
-
+  const { user, setUser } = useContext(UserContext);
   const newBoard = async () => {
-    const { boardId } = await createNewBoard();
+    const { boardId } = await createNewBoard(
+      "Новая доска для работы",
+      user._id
+    );
     history.push(`/board/${boardId}`);
+  };
+  const logOut = async () => {
+    setUser(null);
+    localStorage.removeItem("userSessionBoard");
+    history.push(`/`);
   };
   return (
     <HeaderComponent>
@@ -22,10 +30,15 @@ export const Header = () => {
         <SLink to="/">Канбан-доска</SLink>
       </HeaderTitle>
       <Actions>
-        <HeaderButton onClick={newBoard}>Новая доска</HeaderButton>
-        <div style={{ display: "flex" }}>
-          <SLink to="/boards">Все доски</SLink>
-        </div>
+        {user && (
+          <>
+            <HeaderButton onClick={newBoard}>Новая доска</HeaderButton>
+            <div style={{ display: "flex" }}>
+              <SLink to="/boards">Все доски</SLink>
+              <HeaderButton onClick={logOut}>Выйти</HeaderButton>
+            </div>
+          </>
+        )}
       </Actions>
     </HeaderComponent>
   );

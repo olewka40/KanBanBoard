@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Card, CardContent, TextField } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { createNewBoard } from "../../axiosRequests/board";
@@ -7,17 +7,21 @@ import {
   SCardContent,
   Title
 } from "../Content/AddTask/styled";
+import { UserContext } from "../context/UserContext";
 
 export const AddBoard = ({ getBoards }) => {
   const [boardName, setBoardName] = useState("");
+  const { user } = useContext(UserContext);
+
   const createBoard = () => {
-    if(boardName === "" || boardName === " " || boardName === " ") {
-      alert("Введите название новой доски!")
+    if (boardName === "" || boardName === " " || boardName === " ") {
+      alert("Введите название новой доски!");
+      return
     }
-    createNewBoard(boardName).then(({status,message}) => {
+    createNewBoard(boardName, user._id).then(({ status, message }) => {
       getBoards();
-      setBoardName("")
-      if(status) alert(message)
+      setBoardName("");
+      if (status) alert(message);
     });
   };
   return (
@@ -25,7 +29,7 @@ export const AddBoard = ({ getBoards }) => {
       <Title>Добавить новую Доску</Title>
       <SCardContent>
         <TextField
-            value={boardName}
+          value={boardName}
           variant="outlined"
           placeholder="Название доски"
           onChange={e => {

@@ -1,11 +1,13 @@
 const Database = require("../../Database");
 
 const createNewBoard = async (req, res) => {
-  const { boardName } = req.body;
+  const { boardName, userId } = req.body;
+  console.log(userId);
   const qwe = await Database.board_provider.insert({
     name: boardName ? boardName : "Новая доска",
-    createTime: new Date(),
-    tasksCount: 0
+    createTime: Date.now(),
+    tasksCount: 0,
+    ownerId: userId
   });
 
   res.json({
@@ -16,7 +18,9 @@ const createNewBoard = async (req, res) => {
 };
 
 const getBoards = async (req, res) => {
-  const boards = await Database.board_provider.find();
+  const { userId } = req.params;
+  console.log(userId);
+  const boards = await Database.board_provider.find({ ownerId: userId });
   res.json(boards);
 };
 const getBoardById = async (req, res) => {
@@ -37,7 +41,6 @@ const getBoardById = async (req, res) => {
   const tasks3 = await Database.task_provider.find({
     boardId: boardId,
     status: 3
-
   });
   const tasks4 = await Database.task_provider.find({
     boardId: boardId,

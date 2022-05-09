@@ -38,6 +38,7 @@ export const Task = ({ background, task, getBoard, boardId }) => {
   };
   const editTask = () => {
     setEditMode(true);
+    setNewName("");
   };
 
   return (

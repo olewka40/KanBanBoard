@@ -1,17 +1,15 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { Header } from "./components/Header";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Content } from "./components/Content";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles/";
-import {
-  Switch,
-  Route,
-  useHistory
-} from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import axios from "axios";
 import { Boards } from "./components/Boards";
 import { Button } from "@material-ui/core";
 import { HeaderTitle } from "./components/Header/styled";
+import { Auth } from "./components/Auth";
+import { UserContext } from "./components/context/UserContext";
 
 axios.defaults.baseURL = "http://localhost:3002/";
 
@@ -42,15 +40,33 @@ const theme = createTheme({
 });
 
 const App = () => {
-
   const history = useHistory();
+  const [user, setUser] = useState(null);
 
   const toBoards = () => {
     history.push(`/boards`);
   };
 
+  const checkAuth = async () => {
+    const user =
+      JSON.parse(localStorage.getItem("userSessionBoard")) || undefined;
+    console.log(user, "user");
+    if (user) {
+      setUser(user);
+    }
+  };
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
   return (
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <UserContext.Provider
+        value={{
+          user,
+          setUser
+        }}
+      >
         <AppContainer>
           <link
             href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap&subset=cyrillic"
@@ -62,12 +78,21 @@ const App = () => {
           <Switch>
             <Route exact path="/">
               <Welcome>
-                <HeaderTitle style={{ color: "#2973ec" }}>
-                  Выберите доску для работы
-                </HeaderTitle>
-                <Button color="primary" variant="contained" onClick={toBoards}>
-                  Перейти к доскам
-                </Button>
+                {user && (
+                  <>
+                    <HeaderTitle style={{ color: "#2973ec" }}>
+                      Выберите доску для работы
+                    </HeaderTitle>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={toBoards}
+                    >
+                      Перейти к доскам
+                    </Button>
+                  </>
+                )}
+                {!user && <Auth setUser={setUser} />}
               </Welcome>
             </Route>
             <Route path="/board/:id">
@@ -76,11 +101,12 @@ const App = () => {
               </Main>
             </Route>
             <Route path="/boards">
-              <Boards />
+              <Boards user={user} />
             </Route>
           </Switch>
         </AppContainer>
-      </ThemeProvider>
+      </UserContext.Provider>
+    </ThemeProvider>
   );
 };
 
@@ -93,13 +119,13 @@ const AppContainer = styled.div`
 `;
 const Main = styled.div`
   display: flex;
-  height: calc(100vh - 60px);  
+  min-height: calc(100vh - 60px);
   padding-left: 0;
   padding-top: 20px;
 `;
 const Welcome = styled.div`
   display: flex;
-  height: calc(100vh - 60px);  
+  height: calc(100vh - 60px);
   justify-content: center;
   align-items: center;
   flex-direction: column;

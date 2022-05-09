@@ -8,12 +8,11 @@ export const AddTask = ({ id, getBoard }) => {
   const [taskName, setTaskName] = useState("");
   const createTask = () => {
     if (taskName === "") return;
-    createNewTask(id, taskName).then(({data}) => {
+    createNewTask(id, taskName).then(({ data }) => {
       setTaskName("");
       getBoard();
-      console.log(123)
-      setTaskName("")
-      alert(data.message)
+      setTaskName("");
+      alert(data.message);
     });
   };
   return (
@@ -21,7 +20,7 @@ export const AddTask = ({ id, getBoard }) => {
       <Title>Добавить новую задачу</Title>
       <SCardContent>
         <TextField
-            value={taskName}
+          value={taskName}
           variant="outlined"
           placeholder="Название задачи"
           onChange={e => {
