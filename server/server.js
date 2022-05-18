@@ -30,6 +30,7 @@ app.post("/api/createNewBoard", q_board.createNewBoard);
 app.get("/api/getBoardById/:boardId", q_board.getBoardById);
 app.post("/api/deleteBoard", q_board.deleteBoard);
 app.put("/api/editBoardName", q_board.editBoardName);
+app.put("/api/inversionPrivateBoard", q_board.inversionPrivateBoard);
 
 // tasks
 app.post("/api/createNewTask", q_task.createTask);

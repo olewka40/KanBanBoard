@@ -21,7 +21,7 @@ import {
   editTaskStatus
 } from "../../../../axiosRequests/task";
 
-export const Task = ({ background, task, getBoard, boardId }) => {
+export const Task = ({ background, task, getBoard, boardId, userOwner }) => {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState("");
@@ -77,9 +77,12 @@ export const Task = ({ background, task, getBoard, boardId }) => {
       )}
       {!editMode && (
         <div>
-          <IconButton onClick={handleMenu} color="inherit">
-            <MoreVertIcon />
-          </IconButton>
+          {userOwner && (
+            <IconButton onClick={handleMenu} color="inherit">
+              <MoreVertIcon />
+            </IconButton>
+          )}
+
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}

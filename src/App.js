@@ -3,7 +3,7 @@ import { Header } from "./components/Header";
 import React, { useEffect, useState } from "react";
 import { Content } from "./components/Content";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles/";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Boards } from "./components/Boards";
 import { Button } from "@material-ui/core";
@@ -41,24 +41,26 @@ const theme = createTheme({
 
 const App = () => {
   const history = useHistory();
-  const [user, setUser] = useState(null);
+  let location = useLocation();
+  const [user, setUser] = useState(undefined);
 
   const toBoards = () => {
     history.push(`/boards`);
   };
 
   const checkAuth = async () => {
-    const user =
-      JSON.parse(localStorage.getItem("userSessionBoard")) || undefined;
-    console.log(user, "user");
-    if (user) {
+    const user = JSON.parse(localStorage.getItem("userSessionBoard"));
+    if (user !== null) {
       setUser(user);
+    }else{
+      setUser(null);
     }
   };
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [location.pathname]);
+
   return (
     <ThemeProvider theme={theme}>
       <UserContext.Provider
@@ -78,7 +80,7 @@ const App = () => {
           <Switch>
             <Route exact path="/">
               <Welcome>
-                {user && (
+                {user !== undefined && user !== null &&  (
                   <>
                     <HeaderTitle style={{ color: "#2973ec" }}>
                       Выберите доску для работы
@@ -92,7 +94,7 @@ const App = () => {
                     </Button>
                   </>
                 )}
-                {!user && <Auth setUser={setUser} />}
+                {user === null && <Auth setUser={setUser} />}
               </Welcome>
             </Route>
             <Route path="/board/:id">

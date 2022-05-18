@@ -40,7 +40,6 @@ export const Auth = ({ setUser }) => {
           setUser(data.user);
           localStorage.setItem("userSessionBoard", JSON.stringify(data.user));
         }
-        console.log(data.message);
         alert(data.message);
       });
   };
@@ -55,7 +54,6 @@ export const Auth = ({ setUser }) => {
         password
       })
       .then(({ data }) => {
-        console.log(data.message);
         alert(data.message);
       });
   };
