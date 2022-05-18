@@ -34,6 +34,39 @@ class TaskProvider {
       });
     });
   }
+  async update(query, data, settings) {
+    return new Promise((resolve, reject) => {
+      this.taskDB.update(query, data, settings, (err, data) => {
+        // если ошибка тупо выходим
+        if (err) return reject();
+
+        // иначе возвращаем данные
+        resolve(data);
+      });
+    });
+  }
+  async removeAll(query, multi) {
+    return new Promise((resolve, reject) => {
+      this.taskDB.remove(query, multi, (err, data) => {
+        // если ошибка тупо выходим
+        if (err) return reject();
+
+        // иначе возвращаем данные
+        resolve(data);
+      });
+    });
+  }
+  async remove(query) {
+    return new Promise((resolve, reject) => {
+      this.taskDB.remove(query, (err, data) => {
+        // если ошибка тупо выходим
+        if (err) return reject();
+
+        // иначе возвращаем данные
+        resolve(data);
+      });
+    });
+  }
 
   insert(task) {
     this.taskDB.insert(task);

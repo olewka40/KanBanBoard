@@ -45,6 +45,28 @@ class UserProvider {
       });
     });
   }
+  async removeAll(query, multi) {
+    return new Promise((resolve, reject) => {
+      this.userDB.remove(query, multi, (err, data) => {
+        // если ошибка тупо выходим
+        if (err) return reject();
+
+        // иначе возвращаем данные
+        resolve(data);
+      });
+    });
+  }
+  async remove(query) {
+    return new Promise((resolve, reject) => {
+      this.userDB.remove(query, (err, data) => {
+        // если ошибка тупо выходим
+        if (err) return reject();
+
+        // иначе возвращаем данные
+        resolve(data);
+      });
+    });
+  }
 
   insert(user) {
     this.userDB.insert(user);
