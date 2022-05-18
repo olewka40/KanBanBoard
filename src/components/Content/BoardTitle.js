@@ -3,7 +3,11 @@ import { IconButton, TextField, Button } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { Close, Lock, LockOpen } from "@material-ui/icons";
 
-import { deleteBoard, editBoardName } from "../../axiosRequests/board";
+import {
+  deleteBoard,
+  editBoardName,
+  inversionPrivate
+} from "../../axiosRequests/board";
 import DoneIcon from "@material-ui/icons/Done";
 import React, { useContext, useEffect, useState } from "react";
 import { BoardTitleNoLink } from "../Boards/styled";
@@ -16,16 +20,7 @@ export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
 
   const history = useHistory();
 
-  const inversionPrivate = async () => {
-    const { data } = await axios.put(`/api/inversionPrivateBoard`, {
-      boardId: board._id,
-      boardPrivate: board.private
-    });
-    alert(data.message);
-    getBoard();
-  };
-
-  let boardPrivate =
+  const boardPrivate =
     board.private &&
     board.ownerId !== JSON.parse(localStorage.getItem("userSessionBoard"))._id;
 
@@ -90,17 +85,21 @@ export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
       <div>
         {userOwner && (
           <>
-            {!board.private && (
-              <IconButton onClick={inversionPrivate}>
+            <IconButton
+              onClick={() => {
+                inversionPrivate(board).then(data => {
+                  console.log(data);
+                  alert(data.message);
+                  getBoard();
+                });
+              }}
+            >
+              {board.private ? (
                 <LockOpen color="primary" />
-              </IconButton>
-            )}
-            {board.private && (
-              <IconButton onClick={inversionPrivate}>
+              ) : (
                 <Lock color="primary" />
-              </IconButton>
-            )}
-
+              )}
+            </IconButton>
             <Button
               onClick={() => {
                 deleteBoard(board._id).then(({ data }) => {

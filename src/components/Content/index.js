@@ -11,7 +11,7 @@ export const Content = memo(() => {
   const { user } = useContext(UserContext);
   const { id } = useParams();
 
-  const [board, setBoard] = useState([]);
+  const [board, setBoard] = useState({});
 
   const getBoard = async () => {
     const { data } = await axios.get(`/api/getBoardById/${id}`);
@@ -26,7 +26,7 @@ export const Content = memo(() => {
   }, [id]);
   return (
     <>
-      {board.length !== 0 && (
+      {!!board && (
         <Container>
           <BoardTitleComponent
             userOwner={userOwner}

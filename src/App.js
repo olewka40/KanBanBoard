@@ -41,7 +41,7 @@ const theme = createTheme({
 
 const App = () => {
   const history = useHistory();
-  let location = useLocation();
+  const location = useLocation();
   const [user, setUser] = useState(undefined);
 
   const toBoards = () => {
@@ -52,7 +52,7 @@ const App = () => {
     const user = JSON.parse(localStorage.getItem("userSessionBoard"));
     if (user !== null) {
       setUser(user);
-    }else{
+    } else {
       setUser(null);
     }
   };
@@ -80,7 +80,7 @@ const App = () => {
           <Switch>
             <Route exact path="/">
               <Welcome>
-                {user !== undefined && user !== null &&  (
+                {!!user  && (
                   <>
                     <HeaderTitle style={{ color: "#2973ec" }}>
                       Выберите доску для работы
@@ -94,7 +94,7 @@ const App = () => {
                     </Button>
                   </>
                 )}
-                {user === null && <Auth setUser={setUser} />}
+                {!!user && <Auth setUser={setUser} />}
               </Welcome>
             </Route>
             <Route path="/board/:id">

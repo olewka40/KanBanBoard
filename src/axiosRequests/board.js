@@ -4,7 +4,7 @@ const createNewBoard = async (boardName, userId) => {
   const { data } = await axios.post("/api/createNewBoard", {
     boardName,
     userId,
-    private: true,
+    private: true
   });
   return data;
 };
@@ -14,4 +14,13 @@ const editBoardName = async (boardId, boardName) =>
 const deleteBoard = async boardId =>
   await axios.post(`/api/deleteBoard`, { boardId });
 
-export { createNewBoard, editBoardName, deleteBoard };
+const inversionPrivate = async ( board ) => {
+
+  const { data } = await axios.put(`/api/inversionPrivateBoard`, {
+    boardId: board._id,
+    boardPrivate: board.private
+  });
+  return data;
+};
+
+export { createNewBoard, editBoardName, deleteBoard, inversionPrivate };

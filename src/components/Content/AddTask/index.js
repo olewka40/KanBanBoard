@@ -4,7 +4,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { AddTaskComponent, SCardContent, Title } from "./styled";
 import { createNewTask } from "../../../axiosRequests/task";
 
-export const AddTask = ({ id, getBoard,boardPrivate }) => {
+export const AddTask = ({ id, getBoard }) => {
   const [taskName, setTaskName] = useState("");
   const createTask = () => {
     if (taskName === "") return;
