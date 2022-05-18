@@ -3,7 +3,8 @@ import axios from "axios";
 const createNewBoard = async (boardName, userId) => {
   const { data } = await axios.post("/api/createNewBoard", {
     boardName,
-    userId
+    userId,
+    private: true,
   });
   return data;
 };

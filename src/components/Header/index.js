@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Actions,
   HeaderComponent,
@@ -7,10 +7,11 @@ import {
   SLink
 } from "./styled";
 import { createNewBoard } from "../../axiosRequests/board";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 export const Header = () => {
   const history = useHistory();
+  const location = useLocation();
   const { user, setUser } = useContext(UserContext);
   const newBoard = async () => {
     const { boardId } = await createNewBoard(
@@ -24,6 +25,11 @@ export const Header = () => {
     localStorage.removeItem("userSessionBoard");
     history.push(`/`);
   };
+  useEffect(() => {
+
+    user === null && history.push("/");
+  }, [location.pathname,user]);
+
   return (
     <HeaderComponent>
       <HeaderTitle>

@@ -2,7 +2,7 @@ import React from "react";
 import { Board, TaskSection, Title } from "./styled";
 import { Task } from "./Task";
 
-export const TasksBoard = ({ tasksColumns, getBoard, boardId }) => {
+export const TasksBoard = ({ tasksColumns, getBoard, boardId, userOwner }) => {
   return (
     <Board>
       {tasksColumns &&
@@ -13,6 +13,7 @@ export const TasksBoard = ({ tasksColumns, getBoard, boardId }) => {
             </Title>
             {column.tasks.map(t => (
               <Task
+                userOwner={userOwner}
                 boardId={boardId}
                 key={t._id}
                 background={column.background}

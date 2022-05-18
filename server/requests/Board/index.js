@@ -1,13 +1,13 @@
 const Database = require("../../Database");
 
 const createNewBoard = async (req, res) => {
-  const { boardName, userId } = req.body;
-  console.log(userId);
+  const { boardName, userId, private } = req.body;
   const qwe = await Database.board_provider.insert({
     name: boardName ? boardName : "Новая доска",
     createTime: Date.now(),
     tasksCount: 0,
-    ownerId: userId
+    ownerId: userId,
+    private
   });
 
   res.json({
@@ -19,9 +19,24 @@ const createNewBoard = async (req, res) => {
 
 const getBoards = async (req, res) => {
   const { userId } = req.params;
-  console.log(userId);
   const boards = await Database.board_provider.find({ ownerId: userId });
   res.json(boards);
+};
+
+const inversionPrivateBoard = (req, res) => {
+  const { boardId, boardPrivate } = req.body;
+  console.log(boardId, boardPrivate);
+  Database.board_provider.update(
+    { _id: boardId },
+    { $set: { private: !boardPrivate } },
+    {},
+    function(err, numReplaced) {}
+  );
+  if (!boardPrivate) {
+    res.json({ status: 201, message: `Доска закрыта` });
+  } else {
+    res.json({ status: 201, message: `Доска открыта` });
+  }
 };
 const getBoardById = async (req, res) => {
   const { boardId } = req.params;
@@ -117,5 +132,6 @@ module.exports = {
   getBoards,
   getBoardById,
   editBoardName,
-  deleteBoard
+  deleteBoard,
+  inversionPrivateBoard
 };

@@ -13,7 +13,6 @@ moment.locale("ru");
 export const Board = ({ board, getBoards }) => {
   const [edit, setEdit] = useState(false);
   const [newBoardName, setNewBoardName] = useState("");
-  console.log(board, board.createTime, "board.creationTime");
   return (
     <BoardCard>
       {!edit ? (
@@ -72,7 +71,6 @@ export const Board = ({ board, getBoards }) => {
               editBoardName(board._id, newBoardName).then(({ data }) => {
                 setEdit(false);
                 getBoards();
-                console.log(data);
                 alert(data.message);
               });
             }}

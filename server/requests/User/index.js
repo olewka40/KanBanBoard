@@ -24,11 +24,9 @@ const createNewUser = async (req, res) => {
 };
 const authorization = async (req, res) => {
   const { login, password } = req.params;
-  console.log(login, password, "login, password");
   const user = await Database.user_provider.findOne({
     login
   });
-  console.log(user, "user");
   if (!user) {
     res.json({
       status: 200,

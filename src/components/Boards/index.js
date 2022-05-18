@@ -6,7 +6,6 @@ import { AddBoard } from "./addBoard";
 
 export const Boards = memo(({ user }) => {
   const [boards, setBoards] = useState(null);
-  console.log(user);
   const getBoards = async () => {
     const { data } = await axios.get(`api/getBoards/${user._id}`);
     setBoards(data);
