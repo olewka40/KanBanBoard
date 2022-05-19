@@ -26,12 +26,18 @@ export const AddTask = ({ id, getBoard }) => {
           onChange={e => {
             setTaskName(e.target.value);
           }}
+          onKeyPress={event => {
+            if (event.key === "Enter") {
+              createTask();
+            }
+          }}
         />
         <Button
           onClick={createTask}
           variant="contained"
           color="primary"
           startIcon={<AddIcon />}
+          onEnter={createTask}
         >
           Добавить
         </Button>

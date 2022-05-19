@@ -16,7 +16,7 @@ export const AddBoard = ({ getBoards }) => {
   const createBoard = () => {
     if (boardName === "" || boardName === " " || boardName === " ") {
       alert("Введите название новой доски!");
-      return
+      return;
     }
     createNewBoard(boardName, user._id).then(({ status, message }) => {
       getBoards();
@@ -34,6 +34,11 @@ export const AddBoard = ({ getBoards }) => {
           placeholder="Название доски"
           onChange={e => {
             setBoardName(e.target.value);
+          }}
+          onKeyPress={event => {
+            if (event.key === "Enter") {
+              createBoard();
+            }
           }}
         />
         <Button
