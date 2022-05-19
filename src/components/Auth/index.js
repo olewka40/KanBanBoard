@@ -25,7 +25,20 @@ export const Auth = ({ setUser }) => {
     setLogin("");
     setPassword("");
   };
-
+  const validPassword = password => {
+    // Минимум восемь символов, минимум одна буква и одна цифра:
+    const regularValue = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const result = regularValue.test(password);
+    console.log(result);
+    if (!result) {
+      showAlert({
+        message:
+          "Пароль должен состоять из 8 символов,содержать цифру и  букву",
+        severity: "success"
+      });
+    }
+    return result;
+  };
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
@@ -42,23 +55,26 @@ export const Auth = ({ setUser }) => {
           setUser(data.user);
           localStorage.setItem("userSessionBoard", JSON.stringify(data.user));
         }
-        console.log(data)
+        console.log(data);
         showAlert({ message: data.message, severity: "success" });
       });
   };
   const createNewUser = async () => {
-    if (isClean(password) || isClean(login)) {
-      showAlert({ message: "Поля не могут быть пустыми", severity: "error" });
+    if (isClean(login)) {
+      showAlert({ message: "Поля не могут быть пустыми", severity: "warning" });
       return;
+    } else if (!validPassword(password)) {
+      return;
+    } else {
+      await axios
+        .post(`/api/createNewUser/`, {
+          login,
+          password
+        })
+        .then(({ data }) => {
+          showAlert({ message: data.message, severity: "warning" });;
+        });
     }
-    await axios
-      .post(`/api/createNewUser/`, {
-        login,
-        password
-      })
-      .then(({ data }) => {
-        showAlert({ message: data.message, severity: "success" });
-      });
   };
   return (
     <>
