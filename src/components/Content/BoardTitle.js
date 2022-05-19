@@ -19,10 +19,9 @@ export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
   const [newBoardName, setNewBoardName] = useState("");
 
   const history = useHistory();
+  const { showAlert, user } = useContext(UserContext);
 
-  const boardPrivate =
-    board.private &&
-    board.ownerId !== JSON.parse(localStorage.getItem("userSessionBoard"))._id;
+  const boardPrivate = board.private && board.ownerId !== user?._id;
 
   useEffect(() => {
     boardPrivate && history.push("/");
@@ -70,9 +69,10 @@ export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
                 onClick={() => {
                   if (newBoardName === "") return;
                   editBoardName(board._id, newBoardName).then(({ data }) => {
+                    setNewBoardName("");
                     setEditBoardMode(false);
                     getBoard();
-                    alert(data.message);
+                    showAlert({ massage: data.message, severity: "success" });
                   });
                 }}
               >
@@ -89,7 +89,7 @@ export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
               onClick={() => {
                 inversionPrivate(board).then(data => {
                   console.log(data);
-                  alert(data.message);
+                  showAlert({ massage: data.message, severity: "success" });
                   getBoard();
                 });
               }}
@@ -103,7 +103,7 @@ export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
             <Button
               onClick={() => {
                 deleteBoard(board._id).then(({ data }) => {
-                  alert(data.message);
+                  showAlert({ massage: data.message, severity: "success" });
                   history.replace("/boards");
                 });
               }}

@@ -11,17 +11,21 @@ import { UserContext } from "../context/UserContext";
 
 export const AddBoard = ({ getBoards }) => {
   const [boardName, setBoardName] = useState("");
-  const { user } = useContext(UserContext);
+  const { user, showAlert } = useContext(UserContext);
 
   const createBoard = () => {
     if (boardName === "" || boardName === " " || boardName === " ") {
-      alert("Введите название новой доски!");
-      return
+      showAlert({
+        massage: "Введите название новой доски!",
+        severity: "error"
+      });
+
+      return;
     }
     createNewBoard(boardName, user._id).then(({ status, message }) => {
       getBoards();
       setBoardName("");
-      if (status) alert(message);
+      if (status) showAlert({ massage: message, severity: "success" });
     });
   };
   return (

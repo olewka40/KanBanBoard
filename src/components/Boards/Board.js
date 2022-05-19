@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import { Card, IconButton, TextField } from "@material-ui/core";
 import { BoardTitle, Actions, BoardCard } from "./styled";
 import EditIcon from "@material-ui/icons/Edit";
@@ -8,11 +8,13 @@ import { deleteBoard, editBoardName } from "../../axiosRequests/board";
 import { Close } from "@material-ui/icons";
 import moment from "moment";
 import "moment/locale/ru";
+import {UserContext} from "../context/UserContext";
 
 moment.locale("ru");
 export const Board = ({ board, getBoards }) => {
   const [edit, setEdit] = useState(false);
   const [newBoardName, setNewBoardName] = useState("");
+  const { showAlert } = useContext(UserContext);
   return (
     <BoardCard>
       {!edit ? (
@@ -41,7 +43,7 @@ export const Board = ({ board, getBoards }) => {
               onClick={() => {
                 deleteBoard(board._id).then(({ data }) => {
                   getBoards();
-                  alert(data.message);
+                  showAlert({ massage: data.message, severity: "success" });
                 });
               }}
             >
@@ -53,6 +55,7 @@ export const Board = ({ board, getBoards }) => {
         <>
           <TextField
             variant="outlined"
+            defaultValue={board.name}
             placeholder="Введите новое имя"
             onChange={e => {
               setNewBoardName(e.target.value);
@@ -69,9 +72,10 @@ export const Board = ({ board, getBoards }) => {
             onClick={() => {
               if (newBoardName === "") return;
               editBoardName(board._id, newBoardName).then(({ data }) => {
+                setNewBoardName("")
                 setEdit(false);
                 getBoards();
-                alert(data.message);
+                showAlert({ massage: data.message, severity: "success" });
               });
             }}
           >

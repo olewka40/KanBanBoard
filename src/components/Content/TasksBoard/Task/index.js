@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { TaskContainer, TaskName } from "./styled";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import {
@@ -20,12 +20,14 @@ import {
   editTaskName,
   editTaskStatus
 } from "../../../../axiosRequests/task";
+import { UserContext } from "../../../context/UserContext";
 
 export const Task = ({ background, task, getBoard, boardId, userOwner }) => {
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { showAlert } = useContext(UserContext);
   const handleClick = () => {
     setOpen(!open);
   };
@@ -49,6 +51,7 @@ export const Task = ({ background, task, getBoard, boardId, userOwner }) => {
         <>
           <TextField
             variant="outlined"
+            defaultValue={task.name}
             placeholder="Введите новое имя"
             onChange={e => {
               setNewName(e.target.value);
@@ -65,9 +68,10 @@ export const Task = ({ background, task, getBoard, boardId, userOwner }) => {
             onClick={() => {
               if (newName === "") return;
               editTaskName(task._id, newName).then(({ data }) => {
+                setNewName("")
                 setEditMode(false);
                 getBoard();
-                alert(data.message);
+                showAlert({ massage: data.message, severity: "success" });
               });
             }}
           >
@@ -114,7 +118,7 @@ export const Task = ({ background, task, getBoard, boardId, userOwner }) => {
                 deleteTask(task._id, boardId).then(({ data }) => {
                   getBoard();
                   handleClose();
-                  alert(data.message);
+                  showAlert({ massage: data.message, severity: "success" });
                 });
               }}
             >
@@ -136,7 +140,7 @@ export const Task = ({ background, task, getBoard, boardId, userOwner }) => {
                       editTaskStatus(task._id, 0).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        alert(data.message);
+                        showAlert({ massage: data.message, severity: "success" });
                       });
                     }}
                   >
@@ -150,7 +154,7 @@ export const Task = ({ background, task, getBoard, boardId, userOwner }) => {
                       editTaskStatus(task._id, 1).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        alert(data.message);
+                        showAlert({ massage: data.message, severity: "success" });
                       });
                     }}
                   >
@@ -164,7 +168,7 @@ export const Task = ({ background, task, getBoard, boardId, userOwner }) => {
                       editTaskStatus(task._id, 2).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        alert(data.message);
+                        showAlert({ massage: data.message, severity: "success" });
                       });
                     }}
                   >
@@ -178,7 +182,10 @@ export const Task = ({ background, task, getBoard, boardId, userOwner }) => {
                       editTaskStatus(task._id, 3).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        alert(data.message);
+                        showAlert({
+                          massage: data.message,
+                          severity: "success"
+                        });
                       });
                     }}
                   >
@@ -193,7 +200,10 @@ export const Task = ({ background, task, getBoard, boardId, userOwner }) => {
                       editTaskStatus(task._id, 4).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        alert(data.message);
+                        showAlert({
+                          massage: data.message,
+                          severity: "success"
+                        });
                       });
                     }}
                   >

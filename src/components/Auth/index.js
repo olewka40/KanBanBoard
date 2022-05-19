@@ -9,8 +9,9 @@ import {
   Box,
   Typography
 } from "@material-ui/core";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import PropTypes from "prop-types";
+import { UserContext } from "../context/UserContext";
 
 const isClean = value => {
   return value === "" || value === " ";
@@ -18,7 +19,7 @@ const isClean = value => {
 
 export const Auth = ({ setUser }) => {
   const [value, setValue] = useState(0);
-
+  const { showAlert } = useContext(UserContext);
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setLogin("");
@@ -29,8 +30,9 @@ export const Auth = ({ setUser }) => {
   const [password, setPassword] = useState("");
 
   const authorization = async () => {
-    if (isClean(password) && isClean(login)) {
-      alert("Поля не могут быть пустыми");
+    if (isClean(password) || isClean(login)) {
+      showAlert({ massage: "Поля не могут быть пустыми", severity: "error" });
+
       return;
     }
     await axios
@@ -40,12 +42,13 @@ export const Auth = ({ setUser }) => {
           setUser(data.user);
           localStorage.setItem("userSessionBoard", JSON.stringify(data.user));
         }
-        alert(data.message);
+        console.log(data)
+        showAlert({ massage: data.message, severity: "success" });
       });
   };
   const createNewUser = async () => {
-    if (isClean(password) && isClean(login)) {
-      alert("Поля не могут быть пустыми");
+    if (isClean(password) || isClean(login)) {
+      showAlert({ massage: "Поля не могут быть пустыми", severity: "error" });
       return;
     }
     await axios
@@ -54,7 +57,7 @@ export const Auth = ({ setUser }) => {
         password
       })
       .then(({ data }) => {
-        alert(data.message);
+        showAlert({ massage: data.message, severity: "success" });
       });
   };
   return (

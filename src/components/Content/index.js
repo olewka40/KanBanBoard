@@ -18,7 +18,7 @@ export const Content = memo(() => {
     setBoard(data);
   };
   let userOwner =
-    board.ownerId === JSON.parse(localStorage.getItem("userSessionBoard"))._id;
+    board.ownerId === user?._id;
 
   console.log(123);
   useEffect(() => {

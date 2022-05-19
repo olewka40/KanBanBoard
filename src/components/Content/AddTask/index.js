@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Button, Card, CardContent, TextField } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { AddTaskComponent, SCardContent, Title } from "./styled";
 import { createNewTask } from "../../../axiosRequests/task";
+import {UserContext} from "../../context/UserContext";
 
 export const AddTask = ({ id, getBoard }) => {
   const [taskName, setTaskName] = useState("");
+  const { showAlert } = useContext(UserContext);
   const createTask = () => {
     if (taskName === "") return;
     createNewTask(id, taskName).then(({ data }) => {
       setTaskName("");
       getBoard();
       setTaskName("");
-      alert(data.message);
+      showAlert({ massage: data.message, severity: "success" });
     });
   };
   return (
