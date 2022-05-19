@@ -23,6 +23,7 @@ app.use(morgan("dev"));
 app.post("/api/createNewUser/", q_user.createNewUser);
 app.get("/api/authorization/:login/:password", q_user.authorization);
 app.get("/api/getUserById/:userId", q_user.getUserById);
+app.get("/api/getAllUsers", q_user.getAllUsers);
 
 // boards
 app.get("/api/getBoards/:userId", q_board.getBoards);
@@ -30,6 +31,7 @@ app.post("/api/createNewBoard", q_board.createNewBoard);
 app.get("/api/getBoardById/:boardId", q_board.getBoardById);
 app.post("/api/deleteBoard", q_board.deleteBoard);
 app.put("/api/editBoardName", q_board.editBoardName);
+app.put("/api/editBoardAccess", q_board.editBoardAccess);
 app.put("/api/togglePrivateBoard", q_board.togglePrivateBoard);
 
 // tasks

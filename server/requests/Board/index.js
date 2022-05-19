@@ -5,6 +5,7 @@ const createNewBoard = async (req, res) => {
   const qwe = await Database.board_provider.insert({
     name: boardName ? boardName : "Новая доска",
     createTime: Date.now(),
+    canEdit: null,
     tasksCount: 0,
     ownerId: userId,
     private
@@ -25,7 +26,6 @@ const getBoards = async (req, res) => {
 
 const togglePrivateBoard = (req, res) => {
   const { boardId, boardPrivate } = req.body;
-  console.log(boardId, boardPrivate);
   Database.board_provider.update(
     { _id: boardId },
     { $set: { private: !boardPrivate } },
@@ -111,7 +111,19 @@ const editBoardName = async (req, res) => {
     function(err, docs) {}
   );
 
-  res.json({ status: 201, message: `Имя доски успешно изменено` });
+  res.json({ status: 200, message: `Имя доски успешно изменено` });
+};
+const editBoardAccess = async (req, res) => {
+  const { boardId, usersIdWhoCanEditArray } = req.body;
+
+  Database.board_provider.update(
+    { _id: boardId },
+    { $set: { canEdit: usersIdWhoCanEditArray } },
+    {},
+    function(err, docs) {}
+  );
+
+  res.json({ status: 200, message: `Параметры приватности доски изменены` });
 };
 const deleteBoard = async (req, res) => {
   const { boardId } = req.body;
@@ -138,5 +150,6 @@ module.exports = {
   getBoardById,
   editBoardName,
   deleteBoard,
-  togglePrivateBoard
+  togglePrivateBoard,
+  editBoardAccess
 };

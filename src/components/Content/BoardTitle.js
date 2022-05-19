@@ -12,21 +12,28 @@ import DoneIcon from "@material-ui/icons/Done";
 import React, { useContext, useEffect, useState } from "react";
 import { BoardTitleNoLink } from "../Boards/styled";
 import { useHistory } from "react-router-dom";
+import { ShareBoard } from "./ShareBoard";
 import { UserContext } from "../context/UserContext";
-import axios from "axios";
-export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
+export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
   const [editBoardMode, setEditBoardMode] = useState(false);
   const [newBoardName, setNewBoardName] = useState("");
-
+  const { user } = useContext(UserContext);
   const history = useHistory();
+  const isMyBoard = board.ownerId === user._id;
 
-  const boardPrivate =
-    board.private &&
-    board.ownerId !== JSON.parse(localStorage.getItem("userSessionBoard"))._id;
+  const canEditBoard = () => {
+    // если моя доска то можно
+    if (isMyBoard) return true;
+
+    return canEditAccess(); // проверяю в массиве если есть то отрицаю и можно
+  };
 
   useEffect(() => {
-    boardPrivate && history.push("/");
-  });
+    if (board.private) {
+      !canEditBoard() && history.push("/");
+    } else {
+    }
+  }, [user, board]);
 
   return (
     <BoardTitleNoLink>
@@ -34,7 +41,7 @@ export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <BoardName>{board.name}</BoardName>
           <div>
-            {userOwner && (
+            {canEditBoard() && (
               <IconButton
                 onClick={() => {
                   setEditBoardMode(true);
@@ -48,7 +55,7 @@ export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
         </div>
       ) : (
         <div>
-          {userOwner && (
+          {canEditBoard() && (
             <>
               <TextField
                 variant="outlined"
@@ -83,12 +90,17 @@ export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
         </div>
       )}
       <div>
-        {userOwner && (
-          <>
+        {isMyBoard && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center"
+            }}
+          >
             <IconButton
               onClick={() => {
                 inversionPrivate(board).then(data => {
-                  console.log(data);
                   alert(data.message);
                   getBoard();
                 });
@@ -100,14 +112,11 @@ export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
                 <LockOpen color="primary" />
               )}
             </IconButton>
-            <Button
-              style={{ marginRight: 10, marginLeft: 10 }}
-              onClick={() => {}}
-              color="primary"
-              variant="outlined"
-            >
-              Поделиться доской
-            </Button>
+            <ShareBoard
+              boardId={board._id}
+              usersCanEdit={board.canEdit}
+              getBoard={getBoard}
+            />
             <Button
               style={{ marginRight: 10, marginLeft: 10 }}
               onClick={() => {
@@ -121,7 +130,7 @@ export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
             >
               Удалить доску
             </Button>
-          </>
+          </div>
         )}
       </div>
     </BoardTitleNoLink>

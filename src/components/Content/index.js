@@ -11,13 +11,24 @@ export const Content = memo(() => {
   const { user } = useContext(UserContext);
   const { id } = useParams();
 
-  const [board, setBoard] = useState({});
+  const [board, setBoard] = useState(null);
 
   const getBoard = async () => {
     const { data } = await axios.get(`/api/getBoardById/${id}`);
     setBoard(data);
   };
-  const userOwner = board.ownerId === user?._id;
+  const canEditAccess = () => {
+    if (!board) return false;
+    if (user) {
+      const cannEditUserArray = board?.canEdit;
+      if (!cannEditUserArray) return false;
+      const checkAccess = cannEditUserArray.find(u => u.id === user._id)?.id;
+      return !!checkAccess;
+    } else {
+      return false;
+    }
+  };
+  const userOwner = (board && board.ownerId) === user?._id;
 
   useEffect(() => {
     getBoard();
@@ -30,10 +41,14 @@ export const Content = memo(() => {
             userOwner={userOwner}
             board={board}
             getBoard={getBoard}
+            canEditAccess={canEditAccess}
           />
-          {userOwner && <AddTask id={board._id} getBoard={getBoard} />}
+          {(userOwner || canEditAccess()) && (
+            <AddTask id={board._id} getBoard={getBoard} />
+          )}
           <TasksBoard
             userOwner={userOwner}
+            canEditAccess={canEditAccess}
             tasksColumns={board.tasks}
             getBoard={getBoard}
             boardId={board._id}

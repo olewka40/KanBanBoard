@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     width: 100%;
     background-color: #ecf3fc;
-    
+    overflow: auto;
   }
   #root {
     width: 100%;
@@ -80,7 +80,7 @@ const App = () => {
           <Switch>
             <Route exact path="/">
               <Welcome>
-                {!!user  && (
+                {!!user && (
                   <>
                     <HeaderTitle style={{ color: "#2973ec" }}>
                       Выберите доску для работы

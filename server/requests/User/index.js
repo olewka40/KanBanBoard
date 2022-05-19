@@ -50,9 +50,15 @@ const getUserById = async (req, res) => {
   const user = await Database.user_provider.findOne({ _id: userId });
   res.json(user);
 };
+const getAllUsers = async (req, res) => {
+  const usersDb = await Database.user_provider.find();
+  const users = usersDb.map(user => ({ login: user.login, id: user._id }));
+  res.json(users);
+};
 
 module.exports = {
   createNewUser,
   authorization,
+  getAllUsers,
   getUserById
 };
