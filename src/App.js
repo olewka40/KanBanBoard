@@ -101,6 +101,7 @@ const App = () => {
             open={alert.visible}
             autoHideDuration={6000}
             onClose={hideAlert}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           >
             <Alert onClose={hideAlert} severity={alert.severity}>
               {alert.message}
