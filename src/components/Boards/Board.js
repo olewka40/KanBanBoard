@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import { Card, IconButton, TextField } from "@material-ui/core";
 import { BoardTitle, Actions, BoardCard } from "./styled";
 import EditIcon from "@material-ui/icons/Edit";
@@ -8,7 +8,7 @@ import { deleteBoard, editBoardName } from "../../axiosRequests/board";
 import { Close } from "@material-ui/icons";
 import moment from "moment";
 import "moment/locale/ru";
-import {UserContext} from "../context/UserContext";
+import { UserContext } from "../context/UserContext";
 
 moment.locale("ru");
 export const Board = ({ board, getBoards }) => {
@@ -41,10 +41,15 @@ export const Board = ({ board, getBoards }) => {
             </IconButton>
             <IconButton
               onClick={() => {
-                deleteBoard(board._id).then(({ data }) => {
-                  getBoards();
-                  showAlert({ message: data.message, severity: "success" });
-                });
+                const confirmed = confirm(
+                  "Вы действительно хотите удалить доску?"
+                );
+                if (confirmed) {
+                  deleteBoard(board._id).then(({ data }) => {
+                    getBoards();
+                    showAlert({ message: data.message, severity: "success" });
+                  });
+                }
               }}
             >
               <DeleteIcon color="error" />
@@ -72,7 +77,7 @@ export const Board = ({ board, getBoards }) => {
             onClick={() => {
               if (newBoardName === "") return;
               editBoardName(board._id, newBoardName).then(({ data }) => {
-                setNewBoardName("")
+                setNewBoardName("");
                 setEdit(false);
                 getBoards();
                 showAlert({ message: data.message, severity: "success" });

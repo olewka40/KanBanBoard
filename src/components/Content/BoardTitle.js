@@ -122,10 +122,15 @@ export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
             <Button
               style={{ marginRight: 10, marginLeft: 10 }}
               onClick={() => {
-                deleteBoard(board._id).then(({ data }) => {
-                  showAlert({ message: data.message, severity: "success" });
-                  history.replace("/boards");
-                });
+                const confirmed = confirm(
+                  "Вы действительно хотите удалить доску?"
+                );
+                if (confirmed) {
+                  deleteBoard(board._id).then(({ data }) => {
+                    showAlert({ message: data.message, severity: "success" });
+                    history.replace("/boards");
+                  });
+                }
               }}
               color="secondary"
               variant="contained"
