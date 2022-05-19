@@ -14,10 +14,7 @@ class UserProvider {
   async find(query) {
     return new Promise((resolve, reject) => {
       this.userDB.find(query, (err, data) => {
-        // если ошибка тупо выходим
         if (err) return reject();
-
-        // иначе возвращаем данные
         resolve(data);
       });
     });
@@ -26,10 +23,7 @@ class UserProvider {
   async findOne(query) {
     return new Promise((resolve, reject) => {
       this.userDB.findOne(query, (err, data) => {
-        // если ошибка тупо выходим
         if (err) return reject();
-
-        // иначе возвращаем данные
         resolve(data);
       });
     });
@@ -37,10 +31,7 @@ class UserProvider {
   async update(query, data, settings) {
     return new Promise((resolve, reject) => {
       this.userDB.update(query, data, settings, (err, data) => {
-        // если ошибка тупо выходим
         if (err) return reject();
-
-        // иначе возвращаем данные
         resolve(data);
       });
     });
@@ -48,10 +39,7 @@ class UserProvider {
   async removeAll(query, multi) {
     return new Promise((resolve, reject) => {
       this.userDB.remove(query, multi, (err, data) => {
-        // если ошибка тупо выходим
         if (err) return reject();
-
-        // иначе возвращаем данные
         resolve(data);
       });
     });
@@ -59,10 +47,7 @@ class UserProvider {
   async remove(query) {
     return new Promise((resolve, reject) => {
       this.userDB.remove(query, (err, data) => {
-        // если ошибка тупо выходим
         if (err) return reject();
-
-        // иначе возвращаем данные
         resolve(data);
       });
     });

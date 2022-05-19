@@ -94,7 +94,7 @@ const App = () => {
                     </Button>
                   </>
                 )}
-                {!!user && <Auth setUser={setUser} />}
+                {!user && <Auth setUser={setUser} />}
               </Welcome>
             </Route>
             <Route path="/board/:id">

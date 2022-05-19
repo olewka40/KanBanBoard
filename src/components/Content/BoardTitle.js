@@ -95,12 +95,21 @@ export const BoardTitleComponent = ({ board, getBoard, userOwner }) => {
               }}
             >
               {board.private ? (
-                <LockOpen color="primary" />
-              ) : (
                 <Lock color="primary" />
+              ) : (
+                <LockOpen color="primary" />
               )}
             </IconButton>
             <Button
+              style={{ marginRight: 10, marginLeft: 10 }}
+              onClick={() => {}}
+              color="primary"
+              variant="outlined"
+            >
+              Поделиться доской
+            </Button>
+            <Button
+              style={{ marginRight: 10, marginLeft: 10 }}
               onClick={() => {
                 deleteBoard(board._id).then(({ data }) => {
                   alert(data.message);

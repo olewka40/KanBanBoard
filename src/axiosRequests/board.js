@@ -16,7 +16,7 @@ const deleteBoard = async boardId =>
 
 const inversionPrivate = async ( board ) => {
 
-  const { data } = await axios.put(`/api/inversionPrivateBoard`, {
+  const { data } = await axios.put(`/api/togglePrivateBoard`, {
     boardId: board._id,
     boardPrivate: board.private
   });

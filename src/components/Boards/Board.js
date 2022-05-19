@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, IconButton, TextField } from "@material-ui/core";
+import { IconButton, TextField } from "@material-ui/core";
 import { BoardTitle, Actions, BoardCard } from "./styled";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";

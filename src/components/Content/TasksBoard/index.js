@@ -9,7 +9,7 @@ export const TasksBoard = ({ tasksColumns, getBoard, boardId, userOwner }) => {
         tasksColumns.map(column => (
           <TaskSection key={column.name}>
             <Title background={column.background} color={column.color}>
-              {column.name}
+                {column.name} {column.tasksCount}
             </Title>
             {column.tasks.map(t => (
               <Task

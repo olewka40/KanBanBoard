@@ -8,10 +8,11 @@ const Board = styled.div`
 `;
 const Title = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 10px;
-  width: 125px;
+  width: 175px;
   background-color: ${props => props.background};
   color: ${props => props.color};
   font-weight: bold;

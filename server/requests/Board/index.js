@@ -23,7 +23,7 @@ const getBoards = async (req, res) => {
   res.json(boards);
 };
 
-const inversionPrivateBoard = (req, res) => {
+const togglePrivateBoard = (req, res) => {
   const { boardId, boardPrivate } = req.body;
   console.log(boardId, boardPrivate);
   Database.board_provider.update(
@@ -64,24 +64,28 @@ const getBoardById = async (req, res) => {
   board.tasks = [
     {
       tasks: tasks0,
+      tasksCount: tasks0.length,
       name: "Надо сделать",
       background: "#e0dfe1",
       color: "#706f70"
     },
     {
       tasks: tasks1,
+      tasksCount: tasks1.length,
       name: "В процессе",
       background: "#d1e3fb",
       color: "#4472c7"
     },
     {
       tasks: tasks2,
+      tasksCount: tasks2.length,
       name: "Тестирование",
       background: "#4472c7",
       color: "#d1e3fb"
     },
     {
       tasks: tasks3,
+      tasksCount: tasks3.length,
       name: "Готово",
       background: "#d2f7db",
       color: "#69ab76"
@@ -89,6 +93,7 @@ const getBoardById = async (req, res) => {
     {
       tasks: tasks4,
       name: "Отказано",
+      tasksCount: tasks3.length,
       background: "#fbdedf",
       color: "#b56b73"
     }
@@ -133,5 +138,5 @@ module.exports = {
   getBoardById,
   editBoardName,
   deleteBoard,
-  inversionPrivateBoard
+  togglePrivateBoard
 };

@@ -17,10 +17,8 @@ export const Content = memo(() => {
     const { data } = await axios.get(`/api/getBoardById/${id}`);
     setBoard(data);
   };
-  let userOwner =
-    board.ownerId === JSON.parse(localStorage.getItem("userSessionBoard"))._id;
+  const userOwner = board.ownerId === user?._id;
 
-  console.log(123);
   useEffect(() => {
     getBoard();
   }, [id]);
