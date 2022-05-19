@@ -17,10 +17,9 @@ import { UserContext } from "../context/UserContext";
 export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
   const [editBoardMode, setEditBoardMode] = useState(false);
   const [newBoardName, setNewBoardName] = useState("");
-  const { user } = useContext(UserContext);
   const history = useHistory();
-  const isMyBoard = board.ownerId === user._id;
   const { showAlert, user } = useContext(UserContext);
+  const isMyBoard = board.ownerId === user._id;
 
   const canEditBoard = () => {
     // если моя доска то можно
@@ -81,7 +80,7 @@ export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
                     setNewBoardName("");
                     setEditBoardMode(false);
                     getBoard();
-                    showAlert({ massage: data.message, severity: "success" });
+                    showAlert({ message: data.message, severity: "success" });
                   });
                 }}
               >
@@ -104,7 +103,7 @@ export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
               onClick={() => {
                 inversionPrivate(board).then(data => {
                   console.log(data);
-                  showAlert({ massage: data.message, severity: "success" });
+                  showAlert({ message: data.message, severity: "success" });
                   getBoard();
                 });
               }}
@@ -124,7 +123,7 @@ export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
               style={{ marginRight: 10, marginLeft: 10 }}
               onClick={() => {
                 deleteBoard(board._id).then(({ data }) => {
-                  showAlert({ massage: data.message, severity: "success" });
+                  showAlert({ message: data.message, severity: "success" });
                   history.replace("/boards");
                 });
               }}

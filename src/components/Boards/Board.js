@@ -43,7 +43,7 @@ export const Board = ({ board, getBoards }) => {
               onClick={() => {
                 deleteBoard(board._id).then(({ data }) => {
                   getBoards();
-                  showAlert({ massage: data.message, severity: "success" });
+                  showAlert({ message: data.message, severity: "success" });
                 });
               }}
             >
@@ -75,7 +75,7 @@ export const Board = ({ board, getBoards }) => {
                 setNewBoardName("")
                 setEdit(false);
                 getBoards();
-                showAlert({ massage: data.message, severity: "success" });
+                showAlert({ message: data.message, severity: "success" });
               });
             }}
           >

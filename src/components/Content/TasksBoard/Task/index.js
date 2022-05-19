@@ -78,7 +78,7 @@ export const Task = ({
                 setNewName("")
                 setEditMode(false);
                 getBoard();
-                showAlert({ massage: data.message, severity: "success" });
+                showAlert({ message: data.message, severity: "success" });
               });
             }}
           >
@@ -125,7 +125,7 @@ export const Task = ({
                 deleteTask(task._id, boardId).then(({ data }) => {
                   getBoard();
                   handleClose();
-                  showAlert({ massage: data.message, severity: "success" });
+                  showAlert({ message: data.message, severity: "success" });
                 });
               }}
             >
@@ -147,7 +147,7 @@ export const Task = ({
                       editTaskStatus(task._id, 0).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        showAlert({ massage: data.message, severity: "success" });
+                        showAlert({ message: data.message, severity: "success" });
                       });
                     }}
                   >
@@ -161,7 +161,7 @@ export const Task = ({
                       editTaskStatus(task._id, 1).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        showAlert({ massage: data.message, severity: "success" });
+                        showAlert({ message: data.message, severity: "success" });
                       });
                     }}
                   >
@@ -175,7 +175,7 @@ export const Task = ({
                       editTaskStatus(task._id, 2).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        showAlert({ massage: data.message, severity: "success" });
+                        showAlert({ message: data.message, severity: "success" });
                       });
                     }}
                   >
@@ -190,7 +190,7 @@ export const Task = ({
                         getBoard();
                         handleClose();
                         showAlert({
-                          massage: data.message,
+                          message: data.message,
                           severity: "success"
                         });
                       });
@@ -208,7 +208,7 @@ export const Task = ({
                         getBoard();
                         handleClose();
                         showAlert({
-                          massage: data.message,
+                          message: data.message,
                           severity: "success"
                         });
                       });

@@ -31,7 +31,7 @@ export const Auth = ({ setUser }) => {
 
   const authorization = async () => {
     if (isClean(password) || isClean(login)) {
-      showAlert({ massage: "Поля не могут быть пустыми", severity: "error" });
+      showAlert({ message: "Поля не могут быть пустыми", severity: "error" });
 
       return;
     }
@@ -43,12 +43,12 @@ export const Auth = ({ setUser }) => {
           localStorage.setItem("userSessionBoard", JSON.stringify(data.user));
         }
         console.log(data)
-        showAlert({ massage: data.message, severity: "success" });
+        showAlert({ message: data.message, severity: "success" });
       });
   };
   const createNewUser = async () => {
     if (isClean(password) || isClean(login)) {
-      showAlert({ massage: "Поля не могут быть пустыми", severity: "error" });
+      showAlert({ message: "Поля не могут быть пустыми", severity: "error" });
       return;
     }
     await axios
@@ -57,7 +57,7 @@ export const Auth = ({ setUser }) => {
         password
       })
       .then(({ data }) => {
-        showAlert({ massage: data.message, severity: "success" });
+        showAlert({ message: data.message, severity: "success" });
       });
   };
   return (

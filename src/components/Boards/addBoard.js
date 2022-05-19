@@ -16,7 +16,7 @@ export const AddBoard = ({ getBoards }) => {
   const createBoard = () => {
     if (boardName === "" || boardName === " " || boardName === " ") {
       showAlert({
-        massage: "Введите название новой доски!",
+        message: "Введите название новой доски!",
         severity: "error"
       });
 
@@ -25,7 +25,7 @@ export const AddBoard = ({ getBoards }) => {
     createNewBoard(boardName, user._id).then(({ status, message }) => {
       getBoards();
       setBoardName("");
-      if (status) showAlert({ massage: message, severity: "success" });
+      if (status) showAlert({ message: message, severity: "success" });
     });
   };
   return (

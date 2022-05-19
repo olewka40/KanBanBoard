@@ -14,7 +14,7 @@ export const AddTask = ({ id, getBoard }) => {
       setTaskName("");
       getBoard();
       setTaskName("");
-      showAlert({ massage: data.message, severity: "success" });
+      showAlert({ message: data.message, severity: "success" });
     });
   };
   return (

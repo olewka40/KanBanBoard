@@ -39,14 +39,16 @@ const theme = createTheme({
     }
   }
 });
-
+const Alert = props => {
+  return <MuiAlert variant="outlined" {...props} />;
+};
 const App = () => {
   const history = useHistory();
   const location = useLocation();
   const [user, setUser] = useState(undefined);
   const [alert, setAlert] = React.useState({
     visible: false,
-    massage: "",
+    message: "",
     severity: ""
   });
 
@@ -63,19 +65,15 @@ const App = () => {
     }
   };
 
-  const showAlert = ({ massage, severity }) => {
-    setAlert({ visible: true, massage: massage, severity: severity });
+  const showAlert = ({ message, severity }) => {
+    setAlert({ visible: true, message, severity });
   };
 
   const hideAlert = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-    setAlert({ visible: false, massage: "", severity: "" });
-  };
-
-  const Alert = props => {
-    return <MuiAlert elevation={6} variant="outlined" {...props} />;
+    setAlert({ visible: false, message: "", severity: "" });
   };
 
   useEffect(() => {
@@ -105,7 +103,7 @@ const App = () => {
             onClose={hideAlert}
           >
             <Alert onClose={hideAlert} severity={alert.severity}>
-              {alert.massage}
+              {alert.message}
             </Alert>
           </Snackbar>
           <Switch>
