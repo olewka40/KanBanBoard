@@ -6,10 +6,11 @@ import { createTheme, ThemeProvider } from "@material-ui/core/styles/";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Boards } from "./components/Boards";
-import { Button } from "@material-ui/core";
+import { Button, Snackbar } from "@material-ui/core";
 import { HeaderTitle } from "./components/Header/styled";
 import { Auth } from "./components/Auth";
 import { UserContext } from "./components/context/UserContext";
+import MuiAlert from "@material-ui/lab/Alert";
 
 axios.defaults.baseURL = "http://localhost:3002/";
 
@@ -43,6 +44,11 @@ const App = () => {
   const history = useHistory();
   const location = useLocation();
   const [user, setUser] = useState(undefined);
+  const [alert, setAlert] = React.useState({
+    visible: false,
+    massage: "",
+    severity: ""
+  });
 
   const toBoards = () => {
     history.push(`/boards`);
@@ -57,6 +63,21 @@ const App = () => {
     }
   };
 
+  const showAlert = ({ massage, severity }) => {
+    setAlert({ visible: true, massage: massage, severity: severity });
+  };
+
+  const hideAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlert({ visible: false, massage: "", severity: "" });
+  };
+
+  const Alert = props => {
+    return <MuiAlert elevation={6} variant="outlined" {...props} />;
+  };
+
   useEffect(() => {
     checkAuth();
   }, [location.pathname]);
@@ -66,7 +87,9 @@ const App = () => {
       <UserContext.Provider
         value={{
           user,
-          setUser
+          setUser,
+          showAlert,
+          hideAlert
         }}
       >
         <AppContainer>
@@ -76,7 +99,15 @@ const App = () => {
           />
           <GlobalStyle />
           <Header />
-
+          <Snackbar
+            open={alert.visible}
+            autoHideDuration={6000}
+            onClose={hideAlert}
+          >
+            <Alert onClose={hideAlert} severity={alert.severity}>
+              {alert.massage}
+            </Alert>
+          </Snackbar>
           <Switch>
             <Route exact path="/">
               <Welcome>

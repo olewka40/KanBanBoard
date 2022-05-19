@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { TaskContainer, TaskName } from "./styled";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import {
@@ -20,6 +20,7 @@ import {
   editTaskName,
   editTaskStatus
 } from "../../../../axiosRequests/task";
+import { UserContext } from "../../../context/UserContext";
 
 export const Task = ({
   background,
@@ -33,6 +34,7 @@ export const Task = ({
   const [editMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { showAlert } = useContext(UserContext);
   const handleClick = () => {
     setOpen(!open);
   };
@@ -56,6 +58,7 @@ export const Task = ({
         <>
           <TextField
             variant="outlined"
+            defaultValue={task.name}
             placeholder="Введите новое имя"
             onChange={e => {
               setNewName(e.target.value);
@@ -72,9 +75,10 @@ export const Task = ({
             onClick={() => {
               if (newName === "") return;
               editTaskName(task._id, newName).then(({ data }) => {
+                setNewName("")
                 setEditMode(false);
                 getBoard();
-                alert(data.message);
+                showAlert({ massage: data.message, severity: "success" });
               });
             }}
           >
@@ -121,7 +125,7 @@ export const Task = ({
                 deleteTask(task._id, boardId).then(({ data }) => {
                   getBoard();
                   handleClose();
-                  alert(data.message);
+                  showAlert({ massage: data.message, severity: "success" });
                 });
               }}
             >
@@ -143,7 +147,7 @@ export const Task = ({
                       editTaskStatus(task._id, 0).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        alert(data.message);
+                        showAlert({ massage: data.message, severity: "success" });
                       });
                     }}
                   >
@@ -157,7 +161,7 @@ export const Task = ({
                       editTaskStatus(task._id, 1).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        alert(data.message);
+                        showAlert({ massage: data.message, severity: "success" });
                       });
                     }}
                   >
@@ -171,7 +175,7 @@ export const Task = ({
                       editTaskStatus(task._id, 2).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        alert(data.message);
+                        showAlert({ massage: data.message, severity: "success" });
                       });
                     }}
                   >
@@ -185,7 +189,10 @@ export const Task = ({
                       editTaskStatus(task._id, 3).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        alert(data.message);
+                        showAlert({
+                          massage: data.message,
+                          severity: "success"
+                        });
                       });
                     }}
                   >
@@ -200,7 +207,10 @@ export const Task = ({
                       editTaskStatus(task._id, 4).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        alert(data.message);
+                        showAlert({
+                          massage: data.message,
+                          severity: "success"
+                        });
                       });
                     }}
                   >

@@ -20,6 +20,7 @@ export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
   const { user } = useContext(UserContext);
   const history = useHistory();
   const isMyBoard = board.ownerId === user._id;
+  const { showAlert, user } = useContext(UserContext);
 
   const canEditBoard = () => {
     // если моя доска то можно
@@ -77,9 +78,10 @@ export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
                 onClick={() => {
                   if (newBoardName === "") return;
                   editBoardName(board._id, newBoardName).then(({ data }) => {
+                    setNewBoardName("");
                     setEditBoardMode(false);
                     getBoard();
-                    alert(data.message);
+                    showAlert({ massage: data.message, severity: "success" });
                   });
                 }}
               >
@@ -101,7 +103,8 @@ export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
             <IconButton
               onClick={() => {
                 inversionPrivate(board).then(data => {
-                  alert(data.message);
+                  console.log(data);
+                  showAlert({ massage: data.message, severity: "success" });
                   getBoard();
                 });
               }}
@@ -121,7 +124,7 @@ export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
               style={{ marginRight: 10, marginLeft: 10 }}
               onClick={() => {
                 deleteBoard(board._id).then(({ data }) => {
-                  alert(data.message);
+                  showAlert({ massage: data.message, severity: "success" });
                   history.replace("/boards");
                 });
               }}
