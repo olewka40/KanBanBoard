@@ -72,7 +72,7 @@ export const Auth = ({ setUser }) => {
           password
         })
         .then(({ data }) => {
-          showAlert({ message: data.message, severity: "warning" });;
+          showAlert({ message: data.message, severity: "success" });
         });
     }
   };

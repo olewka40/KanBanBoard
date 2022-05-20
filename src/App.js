@@ -57,11 +57,26 @@ const App = () => {
   };
 
   const checkAuth = async () => {
-    const user = JSON.parse(localStorage.getItem("userSessionBoard"));
-    if (user !== null) {
-      setUser(user);
+    const user = JSON.parse(localStorage.getItem("userSessionBoard")) || null;
+
+    if (user) {
+      await axios.get(`/api/getUserById/${user._id}`).then(({ data }) => {
+        if (data.success) {
+          console.log(data)
+          if (!!data.user) {
+            setUser(user);
+          } else {
+            setUser(null);
+            localStorage.removeItem("userSessionBoard");
+          }
+        } else {
+          setUser(null);
+          localStorage.removeItem("userSessionBoard");
+        }
+      });
     } else {
       setUser(null);
+      localStorage.removeItem("userSessionBoard");
     }
   };
 

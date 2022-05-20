@@ -48,7 +48,7 @@ const authorization = async (req, res) => {
 const getUserById = async (req, res) => {
   const { userId } = req.params;
   const user = await Database.user_provider.findOne({ _id: userId });
-  res.json(user);
+  res.json({ success: true, user });
 };
 const getAllUsers = async (req, res) => {
   const usersDb = await Database.user_provider.find();
