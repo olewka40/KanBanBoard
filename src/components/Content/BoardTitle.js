@@ -19,127 +19,137 @@ export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
   const [newBoardName, setNewBoardName] = useState("");
   const history = useHistory();
   const { showAlert, user } = useContext(UserContext);
-  const isMyBoard = board.ownerId === user._id;
 
   const canEditBoard = () => {
+    console.log(canEditAccess(), "canEditAccess()");
+    const isMyBoard = board.ownerId === user?._id;
     // если моя доска то можно
     if (isMyBoard) return true;
-
     return canEditAccess(); // проверяю в массиве если есть то отрицаю и можно
   };
 
   useEffect(() => {
-    if (board.private) {
-      !canEditBoard() && history.push("/");
-    } else {
+    if (user) {
+      if (board.private) {
+        if (!canEditBoard()) {
+          history.push("/");
+        }
+      }
     }
   }, [user, board]);
 
   return (
-    <BoardTitleNoLink>
-      {!editBoardMode ? (
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <BoardName>{board.name}</BoardName>
+    <>
+      <>
+        <BoardName style={{ paddingLeft: 20 }}>
+          Доска пользователя {board.ownerLogin}
+        </BoardName>
+      </>
+      <BoardTitleNoLink>
+        {!editBoardMode ? (
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <BoardName>{board.name}</BoardName>
+            <div>
+              {canEditBoard() && (
+                <IconButton
+                  onClick={() => {
+                    setEditBoardMode(true);
+                    setNewBoardName("");
+                  }}
+                >
+                  <EditIcon color="primary" />
+                </IconButton>
+              )}
+            </div>
+          </div>
+        ) : (
           <div>
             {canEditBoard() && (
-              <IconButton
-                onClick={() => {
-                  setEditBoardMode(true);
-                  setNewBoardName("");
-                }}
-              >
-                <EditIcon color="primary" />
-              </IconButton>
+              <>
+                <TextField
+                  variant="outlined"
+                  defaultValue={board.name}
+                  placeholder="Введите новое имя"
+                  onChange={e => {
+                    setNewBoardName(e.target.value);
+                  }}
+                />
+                <IconButton
+                  onClick={() => {
+                    setEditBoardMode(false);
+                    setNewBoardName("");
+                  }}
+                >
+                  <Close color="error" />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    if (newBoardName === "") return;
+                    editBoardName(board._id, newBoardName).then(({ data }) => {
+                      setNewBoardName("");
+                      setEditBoardMode(false);
+                      getBoard();
+                      showAlert({ message: data.message, severity: "success" });
+                    });
+                  }}
+                >
+                  <DoneIcon color="primary" />
+                </IconButton>
+              </>
             )}
           </div>
-        </div>
-      ) : (
+        )}
         <div>
-          {canEditBoard() && (
-            <>
-              <TextField
-                variant="outlined"
-                defaultValue={board.name}
-                placeholder="Введите новое имя"
-                onChange={e => {
-                  setNewBoardName(e.target.value);
-                }}
-              />
+          {board?.ownerId === user?._id && (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center"
+              }}
+            >
               <IconButton
                 onClick={() => {
-                  setEditBoardMode(false);
-                  setNewBoardName("");
-                }}
-              >
-                <Close color="error" />
-              </IconButton>
-              <IconButton
-                onClick={() => {
-                  if (newBoardName === "") return;
-                  editBoardName(board._id, newBoardName).then(({ data }) => {
-                    setNewBoardName("");
-                    setEditBoardMode(false);
-                    getBoard();
+                  inversionPrivate(board).then(data => {
+                    console.log(data);
                     showAlert({ message: data.message, severity: "success" });
+                    getBoard();
                   });
                 }}
               >
-                <DoneIcon color="primary" />
+                {board.private ? (
+                  <Lock color="primary" />
+                ) : (
+                  <LockOpen color="primary" />
+                )}
               </IconButton>
-            </>
+              <ShareBoard
+                boardId={board._id}
+                usersCanEdit={board.canEdit}
+                getBoard={getBoard}
+              />
+              <Button
+                style={{ marginRight: 10, marginLeft: 10 }}
+                onClick={() => {
+                  const confirmed = confirm(
+                    "Вы действительно хотите удалить доску?"
+                  );
+                  if (confirmed) {
+                    deleteBoard(board._id).then(({ data }) => {
+                      showAlert({ message: data.message, severity: "success" });
+                      history.replace("/boards");
+                    });
+                  }
+                }}
+                color="secondary"
+                variant="contained"
+              >
+                Удалить доску
+              </Button>
+            </div>
           )}
         </div>
-      )}
-      <div>
-        {isMyBoard && (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center"
-            }}
-          >
-            <IconButton
-              onClick={() => {
-                inversionPrivate(board).then(data => {
-                  console.log(data);
-                  showAlert({ message: data.message, severity: "success" });
-                  getBoard();
-                });
-              }}
-            >
-              {board.private ? (
-                <Lock color="primary" />
-              ) : (
-                <LockOpen color="primary" />
-              )}
-            </IconButton>
-            <ShareBoard
-              boardId={board._id}
-              usersCanEdit={board.canEdit}
-              getBoard={getBoard}
-            />
-            <Button
-              style={{ marginRight: 10, marginLeft: 10 }}
-              onClick={() => {
-                const confirmed = confirm(
-                  "Вы действительно хотите удалить доску?"
-                );
-                if (confirmed) {
-                  deleteBoard(board._id).then(({ data }) => {
-                    showAlert({ message: data.message, severity: "success" });
-                    history.replace("/boards");
-                  });
-                }
-              }}
-              color="secondary"
-              variant="contained"
-            >
-              Удалить доску
-            </Button>
-          </div>
-        )}
-      </div>
-    </BoardTitleNoLink>
+      </BoardTitleNoLink>
+    </>
   );
 };

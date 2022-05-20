@@ -62,7 +62,6 @@ const App = () => {
     if (user) {
       await axios.get(`/api/getUserById/${user._id}`).then(({ data }) => {
         if (data.success) {
-          console.log(data)
           if (!!data.user) {
             setUser(user);
           } else {
@@ -169,6 +168,7 @@ const Main = styled.div`
   min-height: calc(100vh - 60px);
   padding-left: 0;
   padding-top: 20px;
+  box-sizing: border-box;
 `;
 const Welcome = styled.div`
   display: flex;
