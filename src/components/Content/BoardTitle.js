@@ -21,7 +21,6 @@ export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
   const { showAlert, user } = useContext(UserContext);
 
   const canEditBoard = () => {
-    console.log(canEditAccess(), "canEditAccess()");
     const isMyBoard = board.ownerId === user?._id;
     // если моя доска то можно
     if (isMyBoard) return true;

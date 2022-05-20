@@ -25,8 +25,8 @@ export const Header = () => {
     localStorage.removeItem("userSessionBoard");
     history.push(`/`);
   };
-  useEffect(() => {
 
+  useEffect(() => {
     user === null && history.push("/");
   }, [location.pathname,user]);
 

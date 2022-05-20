@@ -1,14 +1,17 @@
 const Database = require("../../Database");
+const CryptoJS = require("crypto-js");
 
 const createNewUser = async (req, res) => {
   const { login, password } = req.body;
+  const passHash = CryptoJS.SHA256(password);
+  console.log(passHash);
   const user = await Database.user_provider.findOne({
     login
   });
   if (!user) {
     await Database.user_provider.insert({
       login: login,
-      password: password
+      password: passHash
     });
 
     res.json({
@@ -24,9 +27,16 @@ const createNewUser = async (req, res) => {
 };
 const authorization = async (req, res) => {
   const { login, password } = req.params;
+  const passHash = CryptoJS.SHA256(password);
   const user = await Database.user_provider.findOne({
     login
   });
+
+  console.log(user.password, "user.password");
+  console.log(
+    passHash,
+    JSON.stringify(user.password) === JSON.stringify(passHash)
+  );
   if (!user) {
     res.json({
       status: 200,
@@ -34,7 +44,10 @@ const authorization = async (req, res) => {
       message: `Неправильный логин, пароль. Возможно такого пользователя не существует.`
     });
   } else {
-    if (user.password === password && user.login === login) {
+    if (
+      JSON.stringify(user.password) === JSON.stringify(passHash) &&
+      user.login === login
+    ) {
       res.json({
         status: 201,
         message: `Вы вошли в систему`,

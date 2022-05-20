@@ -8,6 +8,7 @@ const createNewBoard = async (boardName, userId) => {
   });
   return data;
 };
+
 const editBoardName = async (boardId, boardName) =>
   await axios.put(`/api/editBoardName/`, { boardId, boardName });
 

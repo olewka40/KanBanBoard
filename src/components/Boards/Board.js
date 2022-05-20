@@ -14,6 +14,7 @@ moment.locale("ru");
 export const Board = ({ board, getBoards }) => {
   const [edit, setEdit] = useState(false);
   const [newBoardName, setNewBoardName] = useState("");
+
   const { showAlert } = useContext(UserContext);
   return (
     <BoardCard>

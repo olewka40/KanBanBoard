@@ -39,13 +39,16 @@ const theme = createTheme({
     }
   }
 });
+
 const Alert = props => {
   return <MuiAlert variant="outlined" {...props} />;
 };
+
 const App = () => {
   const history = useHistory();
   const location = useLocation();
   const [user, setUser] = useState(undefined);
+
   const [alert, setAlert] = React.useState({
     visible: false,
     message: "",
