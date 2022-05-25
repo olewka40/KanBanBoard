@@ -42,11 +42,14 @@ const getBoardById = async (req, res) => {
   const { boardId } = req.params;
   const board = await Database.board_provider.findOne({ _id: boardId });
   const owner = await Database.user_provider.findOne({ _id: board.ownerId });
-  console.log(owner,"ownerLogin");
+  console.log(owner, "ownerLogin");
+  console.log(board, "board");
   const tasks0 = await Database.task_provider.find({
     boardId: boardId,
     status: 0
   });
+  console.log(tasks0)
+
   const tasks1 = await Database.task_provider.find({
     boardId: boardId,
     status: 1
@@ -63,7 +66,7 @@ const getBoardById = async (req, res) => {
     boardId: boardId,
     status: 4
   });
-
+  console.log(tasks0, tasks1, tasks2, tasks3, tasks4);
   board.ownerLogin = owner.login;
   board.tasks = [
     {

@@ -32,11 +32,6 @@ const authorization = async (req, res) => {
     login
   });
 
-  console.log(user.password, "user.password");
-  console.log(
-    passHash,
-    JSON.stringify(user.password) === JSON.stringify(passHash)
-  );
   if (!user) {
     res.json({
       status: 200,

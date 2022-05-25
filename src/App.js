@@ -6,12 +6,12 @@ import { createTheme, ThemeProvider } from "@material-ui/core/styles/";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Boards } from "./components/Boards";
-import { Button, Snackbar } from "@material-ui/core";
+import { Button, Snackbar, Slide } from "@material-ui/core";
 import { HeaderTitle } from "./components/Header/styled";
 import { Auth } from "./components/Auth";
 import { UserContext } from "./components/context/UserContext";
 import MuiAlert from "@material-ui/lab/Alert";
-
+import kanbanImage from "./images/kanban.png"
 axios.defaults.baseURL = "http://localhost:3002/";
 
 const GlobalStyle = createGlobalStyle`
@@ -118,7 +118,7 @@ const App = () => {
             open={alert.visible}
             autoHideDuration={6000}
             onClose={hideAlert}
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           >
             <Alert onClose={hideAlert} severity={alert.severity}>
               {alert.message}
@@ -129,9 +129,12 @@ const App = () => {
               <Welcome>
                 {!!user && (
                   <>
-                    <HeaderTitle style={{ color: "#2973ec" }}>
+
+                    <img src={kanbanImage} alt="kanban" />
+                    <HeaderTitle style={{ color: "#2973ec",marginTop:40}}>
                       Выберите доску для работы
                     </HeaderTitle>
+
                     <Button
                       color="primary"
                       variant="contained"
@@ -162,7 +165,7 @@ const App = () => {
 export default App;
 
 const AppContainer = styled.div`
-  width: 80%;
+  width: 90%;
   display: flex;
   flex-direction: column;
 `;

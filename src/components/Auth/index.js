@@ -107,6 +107,11 @@ export const Auth = ({ setUser }) => {
               onChange={e => {
                 setPassword(e.target.value);
               }}
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  authorization();
+                }
+              }}
             />
             <Button color="primary" variant="contained" onClick={authorization}>
               Авторизоваться
@@ -136,6 +141,11 @@ export const Auth = ({ setUser }) => {
               value={password}
               onChange={e => {
                 setPassword(e.target.value);
+              }}
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  createNewUser();
+                }
               }}
             />
             <Button color="primary" variant="contained" onClick={createNewUser}>

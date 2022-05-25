@@ -75,7 +75,7 @@ export const Task = ({
             onClick={() => {
               if (newName === "") return;
               editTaskName(task._id, newName).then(({ data }) => {
-                setNewName("")
+                setNewName("");
                 setEditMode(false);
                 getBoard();
                 showAlert({ message: data.message, severity: "success" });
@@ -122,11 +122,16 @@ export const Task = ({
             </MenuItem>
             <MenuItem
               onClick={() => {
-                deleteTask(task._id, boardId).then(({ data }) => {
-                  getBoard();
-                  handleClose();
-                  showAlert({ message: data.message, severity: "success" });
-                });
+                const confirmed = confirm(
+                  "Вы действительно хотите удалить доску?"
+                );
+                if (confirmed) {
+                  deleteTask(task._id, boardId).then(({ data }) => {
+                    getBoard();
+                    handleClose();
+                    showAlert({ message: data.message, severity: "success" });
+                  });
+                }
               }}
             >
               <IconButton>
@@ -147,7 +152,10 @@ export const Task = ({
                       editTaskStatus(task._id, 0).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        showAlert({ message: data.message, severity: "success" });
+                        showAlert({
+                          message: data.message,
+                          severity: "success"
+                        });
                       });
                     }}
                   >
@@ -161,7 +169,10 @@ export const Task = ({
                       editTaskStatus(task._id, 1).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        showAlert({ message: data.message, severity: "success" });
+                        showAlert({
+                          message: data.message,
+                          severity: "success"
+                        });
                       });
                     }}
                   >
@@ -175,7 +186,10 @@ export const Task = ({
                       editTaskStatus(task._id, 2).then(({ data }) => {
                         getBoard();
                         handleClose();
-                        showAlert({ message: data.message, severity: "success" });
+                        showAlert({
+                          message: data.message,
+                          severity: "success"
+                        });
                       });
                     }}
                   >

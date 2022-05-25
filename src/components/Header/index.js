@@ -9,6 +9,8 @@ import {
 import { createNewBoard } from "../../axiosRequests/board";
 import { useHistory, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import kanbanLogo from "../../images/kanBanLogo.png";
+
 export const Header = () => {
   const history = useHistory();
   const location = useLocation();
@@ -28,12 +30,24 @@ export const Header = () => {
 
   useEffect(() => {
     user === null && history.push("/");
-  }, [location.pathname,user]);
+  }, [location.pathname, user]);
 
   return (
     <HeaderComponent>
       <HeaderTitle>
-        <SLink to="/">Канбан-доска</SLink>
+        <SLink to="/">
+          <img
+            style={{
+              border: "2px solid white",
+              borderRadius: 12,
+              marginRight: 20
+            }}
+            width={48}
+            src={kanbanLogo}
+            alt=""
+          />
+          Канбан-доска
+        </SLink>
       </HeaderTitle>
       <Actions>
         {user && (

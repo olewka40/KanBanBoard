@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 const HeaderComponent = styled.div`
-  height: 60px;
+  height: 80px;
   width: 100%;
   background-color: #2973ec;
   color: aliceblue;
@@ -26,6 +26,9 @@ const Actions = styled.div`
   justify-content: space-between;
 `;
 const SLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-right: 5px;
   margin-left: 5px;
   color: aliceblue;
@@ -40,4 +43,4 @@ const HeaderButton = styled.div`
   text-decoration: none;
 `;
 
-export { HeaderComponent, HeaderTitle, SLink,HeaderButton, Actions };
+export { HeaderComponent, HeaderTitle, SLink, HeaderButton, Actions };

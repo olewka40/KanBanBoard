@@ -13,6 +13,12 @@ const TaskContainer = styled.div`
   font-weight: bolder;
   padding: 7px 7px 7px 15px;
   word-break: break-word;
+  @media (min-width: 1366px) {
+    width: 175px;
+  }@media (min-width: 2559px) {
+    width: 350px;
+  }
+  
 `;
 const TaskName = styled.div``;
 
