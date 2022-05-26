@@ -34,7 +34,20 @@ export const Auth = ({ setUser }) => {
       showAlert({
         message:
           "Пароль должен состоять из 8 символов,содержать цифру и  букву",
-        severity: "success"
+        severity: "warning"
+      });
+    }
+    return result;
+  };
+  const isLatinLogin = login => {
+    const regularValue = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/;
+    const result = regularValue.test(login);
+    console.log(result);
+    if (!result) {
+      showAlert({
+        message:
+          "Логин с ограничением 2-20 символов, которыми могут быть буквы и цифры, первый символ обязательно буква",
+        severity: "warning"
       });
     }
     return result;
@@ -54,17 +67,19 @@ export const Auth = ({ setUser }) => {
         if (data.success) {
           setUser(data.user);
           localStorage.setItem("userSessionBoard", JSON.stringify(data.user));
+          showAlert({ message: data.message, severity: "success" });
+        } else {
+          showAlert({ message: data.message, severity: "warning" });
         }
-        console.log(data);
-        showAlert({ message: data.message, severity: "success" });
       });
   };
   const createNewUser = async () => {
     if (isClean(login)) {
       showAlert({ message: "Поля не могут быть пустыми", severity: "warning" });
       return;
-    } else if (!validPassword(password)) {
+    } else if (!isLatinLogin(login)) {
       return;
+    } else if (!validPassword(password)) {
     } else {
       await axios
         .post(`/api/createNewUser/`, {

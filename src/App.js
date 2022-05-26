@@ -6,12 +6,12 @@ import { createTheme, ThemeProvider } from "@material-ui/core/styles/";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Boards } from "./components/Boards";
-import { Button, Snackbar, Slide } from "@material-ui/core";
+import { Button, Snackbar } from "@material-ui/core";
 import { HeaderTitle } from "./components/Header/styled";
 import { Auth } from "./components/Auth";
 import { UserContext } from "./components/context/UserContext";
 import MuiAlert from "@material-ui/lab/Alert";
-import kanbanImage from "./images/kanban.png"
+import kanbanImage from "./images/kanban.png";
 axios.defaults.baseURL = "http://localhost:3002/";
 
 const GlobalStyle = createGlobalStyle`
@@ -115,10 +115,11 @@ const App = () => {
           <GlobalStyle />
           <Header />
           <Snackbar
+            style={{ marginTop: "7%" }}
             open={alert.visible}
             autoHideDuration={6000}
             onClose={hideAlert}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
           >
             <Alert onClose={hideAlert} severity={alert.severity}>
               {alert.message}
@@ -129,9 +130,8 @@ const App = () => {
               <Welcome>
                 {!!user && (
                   <>
-
                     <img src={kanbanImage} alt="kanban" />
-                    <HeaderTitle style={{ color: "#2973ec",marginTop:40}}>
+                    <HeaderTitle style={{ color: "#2973ec", marginTop: 40 }}>
                       Выберите доску для работы
                     </HeaderTitle>
 
@@ -156,6 +156,7 @@ const App = () => {
               <Boards user={user} />
             </Route>
           </Switch>
+
         </AppContainer>
       </UserContext.Provider>
     </ThemeProvider>
