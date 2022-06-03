@@ -18,6 +18,9 @@ const Title = styled.div`
   font-weight: bold;
   font-size: 16px;
   border-radius: 8px;
+  @media (min-width: 1270px) {
+    width: 150px;
+  }
   @media (min-width: 1366px) {
     width: 175px;
   }

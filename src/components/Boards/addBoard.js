@@ -14,10 +14,16 @@ export const AddBoard = ({ getBoards }) => {
   const { user, showAlert } = useContext(UserContext);
 
   const createBoard = () => {
-    if (boardName === "" || boardName === " " || boardName === " ") {
+    if (
+      boardName === "" ||
+      boardName === " " ||
+      boardName === " " ||
+      boardName[0] === " "
+    ) {
+      setBoardName("");
       showAlert({
         message: "Введите название новой доски!",
-        severity: "error"
+        severity: "warning"
       });
 
       return;

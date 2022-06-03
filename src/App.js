@@ -29,6 +29,7 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     display: flex;
     justify-content: center;
+    
   }
 `;
 
@@ -156,7 +157,6 @@ const App = () => {
               <Boards user={user} />
             </Route>
           </Switch>
-
         </AppContainer>
       </UserContext.Provider>
     </ThemeProvider>
@@ -175,7 +175,8 @@ const Main = styled.div`
   min-height: calc(100vh - 60px);
   padding-left: 0;
   padding-top: 20px;
-  box-sizing: border-box;
+  padding-bottom: 50px;
+
 `;
 const Welcome = styled.div`
   display: flex;

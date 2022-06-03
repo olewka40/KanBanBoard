@@ -31,7 +31,7 @@ export const BoardTitleComponent = ({ board, getBoard, canEditAccess }) => {
     if (user) {
       if (board.private) {
         if (!canEditBoard()) {
-          history.push("/");
+          history.push("/boards");
         }
       }
     }

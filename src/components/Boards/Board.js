@@ -23,11 +23,10 @@ export const Board = ({ board, getBoards }) => {
           <BoardTitle to={`/board/${board._id}`}>
             Название доски: {board.name} <br />
             <br />
-            Дата создания:
-            {moment(board.createTime)
+            Дата создания:<> {moment(board.createTime)
               .lang("ru")
               .startOf()
-              .fromNow()}
+              .fromNow()}</>
             <br />
             <br /> Количество задач: {board.tasksCount}
           </BoardTitle>

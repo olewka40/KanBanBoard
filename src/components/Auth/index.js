@@ -7,11 +7,16 @@ import {
   Tabs,
   Tab,
   Box,
+  InputAdornment,
+  IconButton,
+  Tooltip,
   Typography
 } from "@material-ui/core";
 import { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { UserContext } from "../context/UserContext";
+import { useHistory } from "react-router-dom";
+import HelpIcon from "@material-ui/icons/Help";
 
 const isClean = value => {
   return value === "" || value === " ";
@@ -32,8 +37,7 @@ export const Auth = ({ setUser }) => {
     console.log(result);
     if (!result) {
       showAlert({
-        message:
-          "Пароль должен состоять из 8 символов,содержать цифру и  букву",
+        message: "Пароль должен состоять из 8 символов,содержать цифру и букву",
         severity: "warning"
       });
     }
@@ -54,6 +58,7 @@ export const Auth = ({ setUser }) => {
   };
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   const authorization = async () => {
     if (isClean(password) || isClean(login)) {
@@ -67,6 +72,7 @@ export const Auth = ({ setUser }) => {
         if (data.success) {
           setUser(data.user);
           localStorage.setItem("userSessionBoard", JSON.stringify(data.user));
+          history.push("/boards");
           showAlert({ message: data.message, severity: "success" });
         } else {
           showAlert({ message: data.message, severity: "warning" });
@@ -87,6 +93,8 @@ export const Auth = ({ setUser }) => {
           password
         })
         .then(({ data }) => {
+          setValue(0);
+
           showAlert({ message: data.message, severity: "success" });
         });
     }
@@ -101,7 +109,7 @@ export const Auth = ({ setUser }) => {
         <TabPanel value={value} index={0}>
           <Block>
             <HeaderTitle style={{ color: "#2973ec" }}>
-              Авторизируйтесь чтобы продолжить работу
+              Авторизируйтесь, чтобы продолжить работу
             </HeaderTitle>
 
             <TextField
@@ -136,7 +144,7 @@ export const Auth = ({ setUser }) => {
         <TabPanel value={value} index={1}>
           <Block>
             <HeaderTitle style={{ color: "#2973ec" }}>
-              Зарегистрируйтесь чтобы продолжить работу
+              Зарегистрируйтесь, чтобы продолжить работу
             </HeaderTitle>
 
             <TextField
@@ -147,6 +155,20 @@ export const Auth = ({ setUser }) => {
               onChange={e => {
                 setLogin(e.target.value);
               }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Tooltip
+                      title="Логин с ограничением 2-20 символов, которыми могут быть буквы и цифры, первый символ обязательно буква"
+                      placement="right"
+                    >
+                      <IconButton aria-label="delete">
+                        <HelpIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </InputAdornment>
+                )
+              }}
             />
             <TextField
               style={{ margin: 10 }}
@@ -156,6 +178,20 @@ export const Auth = ({ setUser }) => {
               value={password}
               onChange={e => {
                 setPassword(e.target.value);
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Tooltip
+                      title="Пароль должен состоять из 8 символов,содержать цифру и букву"
+                      placement="right"
+                    >
+                      <IconButton aria-label="delete">
+                        <HelpIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </InputAdornment>
+                )
               }}
               onKeyPress={event => {
                 if (event.key === "Enter") {

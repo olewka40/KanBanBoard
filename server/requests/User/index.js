@@ -51,6 +51,16 @@ const authorization = async (req, res) => {
       });
     }
   }
+  if (
+    user.login === login &&
+    JSON.stringify(user.password) !== JSON.stringify(passHash)
+  ) {
+    res.json({
+      status: 200,
+      message: `Пароль неверный!`,
+      success: false
+    });
+  }
 };
 
 const getUserById = async (req, res) => {
