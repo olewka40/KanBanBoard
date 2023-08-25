@@ -80,7 +80,7 @@ const App = () => {
           <Switch>
             <Route exact path="/">
               <Welcome>
-                {!!user  && (
+                {Boolean(user) ? (
                   <>
                     <HeaderTitle style={{ color: "#2973ec" }}>
                       Выберите доску для работы
@@ -93,8 +93,9 @@ const App = () => {
                       Перейти к доскам
                     </Button>
                   </>
+                ) : (
+                  <Auth setUser={setUser} />
                 )}
-                {!!user && <Auth setUser={setUser} />}
               </Welcome>
             </Route>
             <Route path="/board/:id">

@@ -1,4 +1,5 @@
 const Database = require("../../Database");
+const json2csv = require("json2csv").parse;
 
 const createNewBoard = async (req, res) => {
   const { boardName, userId, private } = req.body;
@@ -126,8 +127,24 @@ const deleteBoard = async (req, res) => {
 
   res.json({ status: 200, message: `Доска успешно удалена!` });
 };
+const createCsv = async (req, res) => {
+  const { boardId } = req.params;
+
+  const tasks = await Database.task_provider.find({
+    boardId: boardId
+  });
+  console.log(tasks);
+  if (!tasks) {
+    res.json({ status: 404, message: `Нет данных для выдачи файла` });
+  } else {
+    const dateee = json2csv(tasks, ["name", "boardId", "status", "_id"]);
+    console.log(dateee, "dateee");
+    res.end(dateee);
+  }
+};
 
 module.exports = {
+  createCsv,
   createNewBoard,
   getBoards,
   getBoardById,

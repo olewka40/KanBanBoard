@@ -23,6 +23,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.0",
+    "json2csv": "^6.0.0-alpha.2",
     "lodash": "^4.17.20",
     "material-ui-popup-state": "^1.5.4",
     "moment": "^2.29.1",

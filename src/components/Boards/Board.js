@@ -1,18 +1,39 @@
 import React, { useState } from "react";
-import { Card, IconButton, TextField } from "@material-ui/core";
+import { IconButton, TextField } from "@material-ui/core";
 import { BoardTitle, Actions, BoardCard } from "./styled";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DoneIcon from "@material-ui/icons/Done";
 import { deleteBoard, editBoardName } from "../../axiosRequests/board";
-import { Close } from "@material-ui/icons";
+import {
+  Close,
+  CloudDownloadOutlined
+} from "@material-ui/icons";
 import moment from "moment";
 import "moment/locale/ru";
+import axios from "axios";
 
 moment.locale("ru");
 export const Board = ({ board, getBoards }) => {
   const [edit, setEdit] = useState(false);
   const [newBoardName, setNewBoardName] = useState("");
+
+  const download = function(data) {
+    const blob = new Blob([data], { type: "text/csv" });
+
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+
+    a.setAttribute("href", url);
+    a.setAttribute("download", "download.csv");
+    a.click();
+  };
+  const downloadCsv = async () => {
+    const { data } = await axios.get(`/api/createCsv/${board._id}`);
+    download(data);
+  };
+
   return (
     <BoardCard>
       {!edit ? (
@@ -46,6 +67,9 @@ export const Board = ({ board, getBoards }) => {
               }}
             >
               <DeleteIcon color="error" />
+            </IconButton>
+            <IconButton onClick={downloadCsv}>
+              <CloudDownloadOutlined color="error" />
             </IconButton>
           </Actions>
         </>

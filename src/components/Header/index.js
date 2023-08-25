@@ -9,6 +9,7 @@ import {
 import { createNewBoard } from "../../axiosRequests/board";
 import { useHistory, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import axios from "axios";
 export const Header = () => {
   const history = useHistory();
   const location = useLocation();
@@ -25,10 +26,11 @@ export const Header = () => {
     localStorage.removeItem("userSessionBoard");
     history.push(`/`);
   };
-  useEffect(() => {
 
+
+  useEffect(() => {
     user === null && history.push("/");
-  }, [location.pathname,user]);
+  }, [location.pathname, user]);
 
   return (
     <HeaderComponent>
